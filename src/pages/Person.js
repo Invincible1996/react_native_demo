@@ -1,5 +1,5 @@
 import React, { Component, } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 
 class Person extends Component {
 
@@ -25,13 +25,24 @@ class Person extends Component {
 
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      data:[
+        
+      ]
+    }
   }
 
+  renderItem(title) {
+    return (
+      <TouchableOpacity style={styles.btn}>
+        <Text style={styles.btnText}>{title}</Text>
+      </TouchableOpacity>
+    )
+  }
   render() {
     return (
       <View style={styles.container}>
-
+        {this.renderItem('地图')}
       </View>
     )
   }
@@ -39,7 +50,22 @@ class Person extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f7f7f7'
+    backgroundColor: '#f7f7f7',
+    paddingVertical: 6,
+    paddingRight: 10,
+    paddingLeft: 10,
+  },
+  btn: {
+    backgroundColor: '#0f0',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    borderRadius: 5,
+    // marginRight:15,
+    // marginLeft:15
+  },
+  btnText: {
+    color: '#fff'
   }
 })
 export default Person
