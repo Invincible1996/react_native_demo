@@ -9,7 +9,9 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  Animated,
+  Easing
 } from 'react-native';
 import { StackNavigator, TabNavigator } from "react-navigation";
 
@@ -21,36 +23,65 @@ import Person from './src/pages/Person'
 const TabConfig = {
   tabBarPosition: 'bottom',
   tabBarOptions: {
-      activeTintColor: '#ff9000',
-      //tabBarComponent: 'TabBarBottom',
-      inactiveTintColor: '#666666',
-      indicatorStyle: { height: 0 },
-      showIcon: true,
-      labelStyle: {
-          fontSize: 12,
-          top: -4,
-          //color:'#666666',
-      },
-      style: {
-          backgroundColor: '#0ff',
-          height: 50,
-          //flex:1,
-          //top:-60
-      },
+    activeTintColor: '#000',
+    //tabBarComponent: 'TabBarBottom',
+    inactiveTintColor: '#666666',
+    indicatorStyle: { height: 0 },
+    showIcon: true,
+    labelStyle: {
+      fontSize: 13,
+      top: -4,
+      //color:'#666666',
+    },
+    style: {
+      backgroundColor: '#fff',
+      height: 50,
+      //flex:1,
+      //top:-60
+    },
   },
   lazy: true,
   animationEnabled: false,
+  swipeEnabled: false
 }
 
 const HomeNav = TabNavigator({
   Home: { screen: Home },
   Message: { screen: Message },
   Person: { screen: Person },
-})
+}, Object.assign({}, TabConfig, {
+  initialRouteName: 'Home',
+}))
 
 const StackNav = StackNavigator({
   HomeNav: { screen: HomeNav }
-})
+}, {
+    initialRouteName: 'HomeNav',
+    // initialRouteParams: { projectId: 5 },
+    navigationOptions: ({ navigation }) => ({
+      headerBackTitle: null,
+      headerStyle: {
+        backgroundColor: '#0f0',
+        elevation: 0,
+        shadowOffset: { width: 0, height: 0 },
+        shadowColor: '#ff9000',
+        shadowOpacity: 10,
+        shadowRadius: 5,
+      },
+      headerTintColor: '#ffffff',
+      headerTitleStyle: {
+        fontSize: 16
+      }
+    }),
+    transitionConfig: () => ({
+      transitionSpec: {
+        duration: 0,
+        timing: Animated.timing,
+        easing: Easing.step0,
+      },
+    }),
+  }
+)
 
 const styles = StyleSheet.create({
   container: {
