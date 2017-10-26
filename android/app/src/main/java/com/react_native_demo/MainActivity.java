@@ -1,6 +1,10 @@
 package com.react_native_demo;
 
+import android.graphics.Color;
+import android.os.Bundle;
+
 import com.facebook.react.ReactActivity;
+import com.react_native_demo.utils.StatusBarCompat;
 
 public class MainActivity extends ReactActivity {
 
@@ -11,5 +15,11 @@ public class MainActivity extends ReactActivity {
     @Override
     protected String getMainComponentName() {
         return "react_native_demo";
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        StatusBarCompat.compat(this, Color.parseColor("#EA0000"));
     }
 }

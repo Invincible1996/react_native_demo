@@ -13,12 +13,13 @@ import {
   Animated,
   Easing
 } from 'react-native';
-import { StackNavigator, TabNavigator } from "react-navigation";
+import { StackNavigator, TabNavigator, DrawerNavigator } from "react-navigation";
 
 import Home from './src/pages/Home'
 import Message from './src/pages/Message'
 import Person from './src/pages/Person'
 import BaiduMap from './src/pages/BaiduMap'
+import DrawerPage from './src/pages/DrawerPage'
 
 
 const TabConfig = {
@@ -31,7 +32,7 @@ const TabConfig = {
     showIcon: true,
     labelStyle: {
       fontSize: 13,
-      top: -4,
+      top: -10,
       //color:'#666666',
     },
     style: {
@@ -54,7 +55,13 @@ const HomeNav = TabNavigator({
   initialRouteName: 'Home',
 }))
 
+// const DrawerNav = DrawerNavigator({
+//   Home: { screen: HomeNav },
+//   DrawerPage: { screen: DrawerPage }
+// })
+
 const StackNav = StackNavigator({
+  // DrawerNav: { screen: DrawerNav },
   HomeNav: { screen: HomeNav },
   BaiduMap: { screen: BaiduMap },
 }, {
@@ -63,7 +70,7 @@ const StackNav = StackNavigator({
     navigationOptions: ({ navigation }) => ({
       headerBackTitle: null,
       headerStyle: {
-        backgroundColor: '#0f0',
+        backgroundColor: '#f00',
         elevation: 0,
         shadowOffset: { width: 0, height: 0 },
         shadowColor: '#ff9000',
@@ -72,8 +79,10 @@ const StackNav = StackNavigator({
       },
       headerTintColor: '#ffffff',
       headerTitleStyle: {
-        fontSize: 16
-      }
+        fontSize: 16,
+        alignSelf:'center'
+      },
+      headerRight:(<View></View>)
     }),
     transitionConfig: () => ({
       transitionSpec: {

@@ -10,14 +10,15 @@ class Home extends Component {
       headerStyle: {
         backgroundColor: '#0f0'
       },
+      headerLeft:(<View></View>),
       headerTitleStyle: {
         fontSize: 16
       },
       tabBarVisible: true,
       headerTintColor: '#ffffff',
       tabBarIcon: ({ tintColor, focused }) => {
-        return (focused ? <View style={{ backgroundColor: '#0f0', width: 20, height: 10, borderRadius: 5 }} />
-          : <View style={{ backgroundColor: '#ccc', width: 20, height: 10, borderRadius: 10 }} />)
+        return (focused ? <View style={{ backgroundColor: 'red', width: 20, height: 10, borderRadius: 5,marginBottom:3 }} />
+          : <View style={{ backgroundColor: '#ccc', width: 20, height: 10, borderRadius: 10,marginBottom:3 }} />)
       }
     }
   };

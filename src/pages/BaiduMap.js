@@ -6,7 +6,8 @@ class BaiduMap extends Component {
 
   static navigationOptions = ({ navigation }) => {
     return {
-      title: '百度地图'
+      headerTitle: '百度地图',
+      headerBackTitleStyle:'返回',
     }
     };
 

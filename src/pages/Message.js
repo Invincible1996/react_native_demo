@@ -13,12 +13,13 @@ class Message extends Component {
       headerTitleStyle: {
         fontSize: 16
       },
+      headerLeft:(<View></View>),
       tabBarVisible: true,
       headerTintColor: '#ffffff',
       tabBarIcon: ({ tintColor, focused }) => {
-        return (focused ? <View style={{ backgroundColor: 'red', width: 20, height: 10, borderRadius: 10 }} />
+        return (focused ? <View style={{ backgroundColor: 'red', width: 20, height: 10, borderRadius: 10 ,marginBottom:3}} />
           :
-          <View style={{ backgroundColor: '#ddd', width: 20, height: 10, borderRadius: 10 }} />)
+          <View style={{ backgroundColor: '#ddd', width: 20, height: 10, borderRadius: 10,marginBottom:3 }} />)
       }
     }
   };

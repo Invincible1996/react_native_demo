@@ -13,12 +13,14 @@ class Person extends Component {
       headerTitleStyle: {
         fontSize: 16
       },
+      
+      headerLeft:(<View></View>),
       tabBarVisible: true,
       headerTintColor: '#ffffff',
       tabBarIcon: ({ tintColor, focused }) => {
-        return (focused ? <View style={{ backgroundColor: 'red', width: 20, height: 10, borderRadius: 10 }} />
+        return (focused ? <View style={{ backgroundColor: 'red', width: 20, height: 10, borderRadius: 10 ,marginBottom:3}} />
           :
-          <View style={{ backgroundColor: '#ddd', width: 20, height: 10, borderRadius: 10 }} />)
+          <View style={{ backgroundColor: '#ddd', width: 20, height: 10, borderRadius: 10,marginBottom:3 }} />)
       }
     }
   };
@@ -61,7 +63,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   btn: {
-    backgroundColor: '#0f0',
+    backgroundColor: '#f00',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 10,
