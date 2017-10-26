@@ -26,23 +26,28 @@ class Person extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      data:[
-        
+      data: [
+
       ]
     }
+
+    this.navigate = this.props.navigation.navigate;
+
+    this.goToMap = this.goToMap.bind(this)
   }
 
-  renderItem(title) {
-    return (
-      <TouchableOpacity style={styles.btn}>
-        <Text style={styles.btnText}>{title}</Text>
-      </TouchableOpacity>
-    )
+  goToMap() {
+    this.navigate('BaiduMap')
   }
+
   render() {
     return (
       <View style={styles.container}>
-        {this.renderItem('地图')}
+        <TouchableOpacity
+          onPress={this.goToMap}
+          style={styles.btn}>
+          <Text style={styles.btnText}>百度地图</Text>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -51,7 +56,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f7f7f7',
-    paddingVertical: 6,
+    paddingVertical: 10,
     paddingRight: 10,
     paddingLeft: 10,
   },
@@ -61,8 +66,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
     borderRadius: 5,
-    // marginRight:15,
-    // marginLeft:15
   },
   btnText: {
     color: '#fff'

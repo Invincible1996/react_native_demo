@@ -18,6 +18,7 @@ import { StackNavigator, TabNavigator } from "react-navigation";
 import Home from './src/pages/Home'
 import Message from './src/pages/Message'
 import Person from './src/pages/Person'
+import BaiduMap from './src/pages/BaiduMap'
 
 
 const TabConfig = {
@@ -54,7 +55,8 @@ const HomeNav = TabNavigator({
 }))
 
 const StackNav = StackNavigator({
-  HomeNav: { screen: HomeNav }
+  HomeNav: { screen: HomeNav },
+  BaiduMap: { screen: BaiduMap },
 }, {
     initialRouteName: 'HomeNav',
     // initialRouteParams: { projectId: 5 },

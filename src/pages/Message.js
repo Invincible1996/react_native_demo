@@ -1,5 +1,5 @@
 import React, { Component, } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
 
 class Message extends Component {
 
@@ -31,7 +31,7 @@ class Message extends Component {
   render() {
     return (
       <View style={styles.container}>
-
+        <Text>Message</Text>
       </View>
     )
   }
