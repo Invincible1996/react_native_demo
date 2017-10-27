@@ -20,6 +20,8 @@ import Message from './src/pages/Message'
 import Person from './src/pages/Person'
 import BaiduMap from './src/pages/BaiduMap'
 import DrawerPage from './src/pages/DrawerPage'
+import Photos from './src/pages/Photos'
+import Search from './src/pages/Search'
 
 
 const TabConfig = {
@@ -52,7 +54,7 @@ const HomeNav = TabNavigator({
   Message: { screen: Message },
   Person: { screen: Person },
 }, Object.assign({}, TabConfig, {
-  initialRouteName: 'Home',
+  initialRouteName: 'Person',
 }))
 
 // const DrawerNav = DrawerNavigator({
@@ -64,13 +66,15 @@ const StackNav = StackNavigator({
   // DrawerNav: { screen: DrawerNav },
   HomeNav: { screen: HomeNav },
   BaiduMap: { screen: BaiduMap },
+  Photos: { screen: Photos },
+  Search: { screen: Search }
 }, {
     initialRouteName: 'HomeNav',
     // initialRouteParams: { projectId: 5 },
     navigationOptions: ({ navigation }) => ({
       headerBackTitle: null,
       headerStyle: {
-        backgroundColor: '#f00',
+        backgroundColor: '#4A4AFF',
         elevation: 0,
         shadowOffset: { width: 0, height: 0 },
         shadowColor: '#ff9000',
@@ -80,9 +84,9 @@ const StackNav = StackNavigator({
       headerTintColor: '#ffffff',
       headerTitleStyle: {
         fontSize: 16,
-        alignSelf:'center'
+        alignSelf: 'center'
       },
-      headerRight:(<View></View>)
+      headerRight: (<View></View>)
     }),
     transitionConfig: () => ({
       transitionSpec: {

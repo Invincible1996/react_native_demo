@@ -1,5 +1,6 @@
 import React, { Component, } from 'react'
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
+import CommonStyle from '../component/CommonStyle'
 
 class Person extends Component {
 
@@ -13,14 +14,14 @@ class Person extends Component {
       headerTitleStyle: {
         fontSize: 16
       },
-      
-      headerLeft:(<View></View>),
+
+      headerLeft: (<View></View>),
       tabBarVisible: true,
       headerTintColor: '#ffffff',
       tabBarIcon: ({ tintColor, focused }) => {
-        return (focused ? <View style={{ backgroundColor: 'red', width: 20, height: 10, borderRadius: 10 ,marginBottom:3}} />
+        return (focused ? <View style={{ backgroundColor: 'red', width: 20, height: 10, borderRadius: 10, marginBottom: 3 }} />
           :
-          <View style={{ backgroundColor: '#ddd', width: 20, height: 10, borderRadius: 10,marginBottom:3 }} />)
+          <View style={{ backgroundColor: '#ddd', width: 20, height: 10, borderRadius: 10, marginBottom: 3 }} />)
       }
     }
   };
@@ -36,10 +37,20 @@ class Person extends Component {
     this.navigate = this.props.navigation.navigate;
 
     this.goToMap = this.goToMap.bind(this)
+    this.goToPhotos = this.goToPhotos.bind(this)
+    this.gotoSearch = this.gotoSearch.bind(this)
   }
 
   goToMap() {
     this.navigate('BaiduMap')
+  }
+
+  goToPhotos() {
+    this.navigate('Photos')
+  }
+
+  gotoSearch() {
+    this.navigate('Search')
   }
 
   render() {
@@ -49,6 +60,16 @@ class Person extends Component {
           onPress={this.goToMap}
           style={styles.btn}>
           <Text style={styles.btnText}>百度地图</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={this.goToPhotos}
+          style={styles.btn}>
+          <Text style={styles.btnText}>图片展示</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={this.gotoSearch}
+          style={styles.btn}>
+          <Text style={styles.btnText}>搜索</Text>
         </TouchableOpacity>
       </View>
     )
@@ -63,11 +84,12 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   btn: {
-    backgroundColor: '#f00',
+    backgroundColor: CommonStyle.color_blue,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 10,
     borderRadius: 5,
+    marginBottom: 5
   },
   btnText: {
     color: '#fff'

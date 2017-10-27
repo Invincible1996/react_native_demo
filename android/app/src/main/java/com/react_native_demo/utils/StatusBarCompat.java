@@ -45,7 +45,6 @@ public class StatusBarCompat {
             statusBarView.setBackgroundColor(color);
             contentView.addView(statusBarView, lp);
         }
-
     }
 
     public static void compat(Activity activity)
