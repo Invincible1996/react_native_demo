@@ -22,6 +22,7 @@ import BaiduMap from './src/pages/BaiduMap'
 import DrawerPage from './src/pages/DrawerPage'
 import Photos from './src/pages/Photos'
 import Search from './src/pages/Search'
+import WebPage from './src/pages/WebPage'
 
 
 const TabConfig = {
@@ -67,7 +68,8 @@ const StackNav = StackNavigator({
   HomeNav: { screen: HomeNav },
   BaiduMap: { screen: BaiduMap },
   Photos: { screen: Photos },
-  Search: { screen: Search }
+  Search: { screen: Search },
+  WebPage: { screen: WebPage }
 }, {
     initialRouteName: 'HomeNav',
     // initialRouteParams: { projectId: 5 },

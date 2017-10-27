@@ -3,6 +3,7 @@ import { View, Text } from 'react-native'
 
 import BasePage from '../component/BasePage'
 class Photos extends BasePage {
+  
 
   constructor(props) {
     super(props)
