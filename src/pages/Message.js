@@ -1,6 +1,6 @@
 import React, { Component, } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
-
+import Icon from 'react-native-vector-icons/Entypo'
 class Message extends Component {
 
   static navigationOptions = ({ navigation }) => {
@@ -13,14 +13,10 @@ class Message extends Component {
       headerTitleStyle: {
         fontSize: 16
       },
-      headerLeft:(<View></View>),
+      headerLeft:(<View/>),
       tabBarVisible: true,
       headerTintColor: '#ffffff',
-      tabBarIcon: ({ tintColor, focused }) => {
-        return (focused ? <View style={{ backgroundColor: 'red', width: 20, height: 10, borderRadius: 10 ,marginBottom:3}} />
-          :
-          <View style={{ backgroundColor: '#ddd', width: 20, height: 10, borderRadius: 10,marginBottom:3 }} />)
-      }
+      tabBarIcon: ({ tintColor, focused }) => (<Icon name="message" size={24} color={focused ? tintColor : '#9c9c9c'} />)
     }
   };
 

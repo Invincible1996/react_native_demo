@@ -1,5 +1,5 @@
 import React, { Component, } from 'react'
-import { View, Text, TextInput, TouchableOpacity, Platform } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, Platform,Image } from 'react-native'
 import BasePage from '../component/BasePage'
 import Commonstyle from '../component/CommonStyle'
 
@@ -13,7 +13,7 @@ class Search extends Component {
     super(props)
     this.state = {
       hotData: [
-        { title: '休斯顿火箭', url: 'https://nba.hupu.com/teams/rockets' },
+        { title: '休斯顿火箭', url: 'https://www.jd.com' },
         { title: '洛杉矶湖人', url: 'https://nba.hupu.com/teams/lakers' },
         { title: '金州勇士', url: '' },
         { title: '迈阿密热火', url: '' },
@@ -50,15 +50,16 @@ class Search extends Component {
   }
 
   onSearch() {
-    alert('111111111')
+    console.log('111111111')
   }
 
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: Commonstyle.color_blue }}>
-        <View style={{ marginTop: Platform.OS === 'ios' ? 18 : 0, backgroundColor: Commonstyle.color_blue, justifyContent: 'center', alignItems: 'center', padding: 10, flexDirection: 'row' }}>
-          <TouchableOpacity onPress={this.back} style={{ marginRight: 12 }}>
-            <Text >返回</Text>
+      <View style={{ flex: 1, backgroundColor: '#313237' }}>
+        <View style={{ marginTop: Platform.OS === 'ios' ? 18 : 0, backgroundColor: Commonstyle.color_dark, justifyContent: 'center', alignItems: 'center', padding: 10, flexDirection: 'row' }}>
+          <TouchableOpacity onPress={this.back} style={{ marginRight: 12,flexDirection:'row',alignItems:'center'}}>
+            <Image source={require('../res/images/back_white_button.png')}/>
+            <Text style={{color:'#fff',fontSize:16}}>返回</Text>
           </TouchableOpacity>
           <TextInput
             returnKeyType='search'

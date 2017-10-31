@@ -1,7 +1,7 @@
 import React, { Component, } from 'react'
 import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import CommonStyle from '../component/CommonStyle'
-
+import Icon from 'react-native-vector-icons/Ionicons'
 class Person extends Component {
 
   static navigationOptions = ({ navigation }) => {
@@ -17,12 +17,8 @@ class Person extends Component {
 
       headerLeft: (<View></View>),
       tabBarVisible: true,
-      headerTintColor: '#ffffff',
-      tabBarIcon: ({ tintColor, focused }) => {
-        return (focused ? <View style={{ backgroundColor: 'red', width: 20, height: 10, borderRadius: 10, marginBottom: 3 }} />
-          :
-          <View style={{ backgroundColor: '#ddd', width: 20, height: 10, borderRadius: 10, marginBottom: 3 }} />)
-      }
+      headerTintColor: '#00f',
+      tabBarIcon: ({ tintColor, focused }) => (<Icon name="md-contact" size={24} color={focused ? tintColor : '#9c9c9c'} />)
     }
   };
 
@@ -39,6 +35,7 @@ class Person extends Component {
     this.goToMap = this.goToMap.bind(this)
     this.goToPhotos = this.goToPhotos.bind(this)
     this.gotoSearch = this.gotoSearch.bind(this)
+    this.goToTextInputTest = this.goToTextInputTest.bind(this)
   }
 
   goToMap() {
@@ -53,6 +50,9 @@ class Person extends Component {
     this.navigate('Search')
   }
 
+  goToTextInputTest() {
+    this.navigate('TextInputTest')
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -71,6 +71,11 @@ class Person extends Component {
           style={styles.btn}>
           <Text style={styles.btnText}>搜索</Text>
         </TouchableOpacity>
+        <TouchableOpacity
+          onPress={this.goToTextInputTest}
+          style={styles.btn}>
+          <Text style={styles.btnText}>多个TextInput</Text>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -80,19 +85,21 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f7f7f7',
     paddingVertical: 10,
-    paddingRight: 10,
-    paddingLeft: 10,
+    // paddingRight: 10,
+    // paddingLeft: 10,
   },
   btn: {
-    backgroundColor: CommonStyle.color_blue,
+    backgroundColor: '#fff',
     justifyContent: 'center',
-    alignItems: 'center',
+    // alignItems: 'center',
     padding: 10,
-    borderRadius: 5,
-    marginBottom: 5
+    // borderRadius: 5,
+    marginBottom: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee'
   },
   btnText: {
-    color: '#fff'
+    color: '#333'
   }
 })
 export default Person

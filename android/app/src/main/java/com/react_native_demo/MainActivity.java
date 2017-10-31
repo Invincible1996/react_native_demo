@@ -25,7 +25,7 @@ public class MainActivity extends ReactActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarCompat.compat(this, Color.parseColor("#6A6AFF"));
+        StatusBarCompat.compat(this, Color.parseColor("#313237"));
     }
 
 

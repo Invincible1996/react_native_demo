@@ -1,5 +1,6 @@
 import React, { Component, } from 'react'
-import { View, StyleSheet, Text } from 'react-native'
+import { View, StyleSheet, Text, Image, FlatList } from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome'
 import Commonstye from '../component/CommonStyle'
 class Home extends Component {
 
@@ -16,22 +17,64 @@ class Home extends Component {
       },
       tabBarVisible: true,
       headerTintColor: '#ffffff',
-      tabBarIcon: ({ tintColor, focused }) => {
-        return (focused ? <View style={styles.bottomSelect} />
-          : <View style={{ backgroundColor: '#ccc', width: 20, height: 10, borderRadius: 10, marginBottom: 3 }} />)
-      }
+      tabBarIcon: ({ tintColor, focused }) => (<Icon name="home" size={24} color={focused ? tintColor : '#9c9c9c'} />)
     }
   };
 
   constructor(props) {
     super(props)
-    this.state = {}
+    this.state = {
+      data: []
+    }
+  }
+
+  componentDidMount() {
+    this.getMoviesFromApi()
+    // this.getNetData()
+  }
+
+  async getMoviesFromApi() {
+    try {
+      // 注意这里的await语句，其所在的函数必须有async关键字声明
+      let response = await fetch('https://japi.juhe.cn/joke/img/text.from?key=8aad35fd1e3384b259293e9f491cab5e&page=1&pagesize=10');
+      let responseJson = await response.json();
+      console.log('responseJson', responseJson.result.data)
+      this.setState({
+        data: responseJson.result.data
+      }, () => console.log('this,state,data', this.state.data))
+      // return responseJson.movies;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  async getNetData() {
+
+  }
+
+  renderItem({ item }) {
+    return (
+      <View style={{ flex: 1, backgroundColor: '#fff', margin: 5, padding: 5, borderRadius: 5 }}>
+        <Text>{item.content}</Text>
+        <Image source={{ uri: item.url }} style={{ width: 200, height: 100, margin: 5 }} />
+        <Text style={{ alignSelf: 'flex-end' }}>{item.updatetime}</Text>
+      </View>
+    )
+  }
+
+  keyExtractor(item) {
+    console.log('item', item)
+    return item.content
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>首页</Text>
+        <FlatList
+          data={this.state.data}
+          renderItem={this.renderItem}
+          keyExtractor={this.keyExtractor}
+        />
       </View>
     )
   }
@@ -42,7 +85,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f7f7f7'
   },
   bottomSelect: {
-    backgroundColor: Commonstye.color_blue,
+    backgroundColor: '#393A3F',
     width: 20,
     height: 10,
     borderRadius: 5,

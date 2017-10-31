@@ -23,19 +23,20 @@ import DrawerPage from './src/pages/DrawerPage'
 import Photos from './src/pages/Photos'
 import Search from './src/pages/Search'
 import WebPage from './src/pages/WebPage'
+import TextInputTest from './src/pages/TextInputTest'
 
 
 const TabConfig = {
   tabBarPosition: 'bottom',
   tabBarOptions: {
-    activeTintColor: '#000',
+    activeTintColor: '#393A3F',
     //tabBarComponent: 'TabBarBottom',
-    inactiveTintColor: '#666666',
+    inactiveTintColor: '#9c9c9c',
     indicatorStyle: { height: 0 },
     showIcon: true,
     labelStyle: {
       fontSize: 13,
-      top: -10,
+      top: -8,
       //color:'#666666',
     },
     style: {
@@ -69,14 +70,15 @@ const StackNav = StackNavigator({
   BaiduMap: { screen: BaiduMap },
   Photos: { screen: Photos },
   Search: { screen: Search },
-  WebPage: { screen: WebPage }
+  WebPage: { screen: WebPage },
+  TextInputTest: { screen: TextInputTest }
 }, {
     initialRouteName: 'HomeNav',
     // initialRouteParams: { projectId: 5 },
     navigationOptions: ({ navigation }) => ({
       headerBackTitle: null,
       headerStyle: {
-        backgroundColor: '#4A4AFF',
+        backgroundColor: '#393A3F',
         elevation: 0,
         shadowOffset: { width: 0, height: 0 },
         shadowColor: '#ff9000',

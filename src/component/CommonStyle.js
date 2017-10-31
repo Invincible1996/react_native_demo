@@ -78,6 +78,7 @@ var CommonStyle = {
     /***辅助色,白色*/
     color_white: '#ffffff',
     color_blue: '#4A4AFF',
+    color_dark: '#313237',
 
 
     width_1_PixelRatio: 1 / PixelRatio.get(),
