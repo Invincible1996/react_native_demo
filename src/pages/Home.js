@@ -11,7 +11,7 @@ class Home extends Component {
       headerStyle: {
         backgroundColor: '#0f0'
       },
-      headerLeft: (<View></View>),
+      headerLeft: (<View />),
       headerTitleStyle: {
         fontSize: 16
       },
@@ -67,6 +67,12 @@ class Home extends Component {
     return item.content
   }
 
+  ListFooterComponent() {
+    return (<View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, backgroundColor: null, padding: 10 }}>
+      <Text>没有更多数据。。</Text>
+    </View>)
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -74,6 +80,7 @@ class Home extends Component {
           data={this.state.data}
           renderItem={this.renderItem}
           keyExtractor={this.keyExtractor}
+          ListFooterComponent={this.ListFooterComponent}
         />
       </View>
     )

@@ -74,7 +74,6 @@ const StackNav = StackNavigator({
   TextInputTest: { screen: TextInputTest }
 }, {
     initialRouteName: 'HomeNav',
-    // initialRouteParams: { projectId: 5 },
     navigationOptions: ({ navigation }) => ({
       headerBackTitle: null,
       headerStyle: {
