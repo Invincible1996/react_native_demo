@@ -24,6 +24,7 @@ import Photos from './src/pages/Photos'
 import Search from './src/pages/Search'
 import WebPage from './src/pages/WebPage'
 import TextInputTest from './src/pages/TextInputTest'
+import PhotosSelect from './src/pages/PhotosSelect'
 
 
 const TabConfig = {
@@ -71,7 +72,8 @@ const StackNav = StackNavigator({
   Photos: { screen: Photos },
   Search: { screen: Search },
   WebPage: { screen: WebPage },
-  TextInputTest: { screen: TextInputTest }
+  TextInputTest: { screen: TextInputTest },
+  PhotosSelect: { screen: PhotosSelect }
 }, {
     initialRouteName: 'HomeNav',
     navigationOptions: ({ navigation }) => ({

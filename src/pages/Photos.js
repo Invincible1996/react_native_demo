@@ -23,6 +23,7 @@ class Photos extends BasePage {
         { title: 'kobe4', url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg' },
       ]
     }
+    this.navigate = this.props.navigation.navigate;
 
     this.addPotos = this.addPotos.bind(this)
     this.renderHeader = this.renderHeader.bind(this)
@@ -31,7 +32,7 @@ class Photos extends BasePage {
   }
 
   addPotos() {
-    console.log('456456456456456')
+    this.navigate('PhotosSelect')
   }
 
   renderHeader() {
@@ -49,9 +50,9 @@ class Photos extends BasePage {
   }
 
   renderImages({ item }) {
-    return (<TouchableOpacity 
+    return (<TouchableOpacity
       activeOpacity={1.0}
-      style={{ margin: 2 }} 
+      style={{ margin: 2 }}
       onPress={this.goToBigImage}>
       <Image source={{ uri: item.url }} style={{ width: CommonStyle.screen_width / 3 - 8, height: CommonStyle.screen_width / 3 - 8 }} />
     </TouchableOpacity>)
@@ -63,7 +64,7 @@ class Photos extends BasePage {
 
   renderImageList() {
     return (
-      <View style={{padding:5}}>
+      <View style={{ padding: 5 }}>
         <FlatList
           numColumns={3}
           data={this.state.images}
@@ -77,8 +78,8 @@ class Photos extends BasePage {
   render() {
     return (
       <View style={{ padding: 0, flex: 1 }}>
-        <View style={{padding:5}}>
-        {this.renderHeader()}
+        <View style={{ padding: 5 }}>
+          {this.renderHeader()}
         </View>
         {this.renderImageList()}
       </View>

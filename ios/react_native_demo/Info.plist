@@ -58,6 +58,12 @@
 	<false/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSCameraUsageDescription</key>
+	<string>需要您的同意才能调用相机哦</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>试试</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>需要您的同意才能读取媒体库</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
@@ -68,6 +74,8 @@
 				<true/>
 			</dict>
 		</dict>
+		<key></key>
+		<false/>
 	</dict>
 </dict>
 </plist>

@@ -1,5 +1,5 @@
 import React, { Component, } from 'react'
-import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, ScrollView, Image } from 'react-native'
 
 import BasePage from '../component/BasePage'
 import CommonTextInput from '../component/CommonTextInput'
@@ -14,7 +14,6 @@ export default class TextInputTest extends BasePage {
     constructor(props) {
         super(props)
         this.state = {
-
             AA: '',
             BB: '',
             CC: '',
