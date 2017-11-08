@@ -1,7 +1,6 @@
 import React, { Component, } from 'react'
-import { View, Text, WebView, TouchableOpacity, FlatList, Image } from 'react-native'
+import { View, Text, WebView, TouchableOpacity, FlatList, Image, CameraRoll, StyleSheet } from 'react-native'
 
-import EmptyView from '../component/EmptyView'
 import CommonStyle from '../component/CommonStyle'
 
 export default class PhotosSelect extends Component {
@@ -21,38 +20,33 @@ export default class PhotosSelect extends Component {
         super(props)
         this.state = {
             count: 0,
-            images: [
-                { title: 'kobe1', url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-2.jpg' },
-                { title: 'kobe2', url: 'https://i0.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-4.jpg' },
-                { title: 'kobe3', url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-2.jpg' },
-                { title: 'kobe4', url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg' },
-                { title: 'kobe5', url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-2.jpg' },
-                { title: 'kobe6', url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-2.jpg' },
-                { title: 'kobe7', url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-4.jpg' },
-                { title: 'kobe8', url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-2.jpg' },
-                { title: 'kobe9', url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-2.jpg' },
-                { title: 'kobe10', url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-2.jpg' },
-                { title: 'kobe11', url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-4.jpg' },
-                { title: 'kobe12', url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-2.jpg' },
-                { title: 'kobe13', url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-2.jpg' },
-                { title: 'kobe14', url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-2.jpg' },
-                { title: 'kobe15', url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-2.jpg' },
-            ]
+            page_info: {},
+            images: []
         }
 
         this.clickSave = this.clickSave.bind(this)
         this.renderItem = this.renderItem.bind(this)
         this.goToBigImage = this.goToBigImage.bind(this)
+        this.loadMore = this.loadMore.bind(this)
     }
 
     componentWillMount() {
         this.props.navigation.setParams({ clickParams: this.clickSave, count: this.state.count })
     }
 
+    componentDidMount() {
+        CameraRoll.getPhotos({
+            //groupTypes: 'PhotoStream',
+            assetType: 'Photos',//mediaType,//All, Videos, Photos
+            first: 21
+        })
+            .then(res => this.setState({ images: res.edges, page_info: res.page_info }))
+            .catch(error => this.setState({ isError: true }))
+    }
+
     clickSave() {
         const { navigate, goBack, state } = this.props.navigation;
         // state.params.callBack(this.state.subCateId,this.goodsList);
-        // setTimeout(()=>goBack(null),0)
         goBack(null)
     }
 
@@ -64,29 +58,59 @@ export default class PhotosSelect extends Component {
     renderItem(item) {
         return (<TouchableOpacity
             activeOpacity={1.0}
-            style={{ margin: 4 }}
+            style={{ margin: 3, borderColor: '#ddd', borderWidth: 1 }}
             onPress={() => this.goToBigImage(item)}>
-            <Image source={{ uri: item.item.url }} style={{ width: CommonStyle.screen_width / 3 - 8, height: CommonStyle.screen_width / 3 - 8 }} />
+            <Image
+                source={{ uri: item.item.node.image.uri }}
+                style={{ width: CommonStyle.screen_width / 3 - 8, height: CommonStyle.screen_width / 3 - 8 }} />
         </TouchableOpacity>)
     }
 
-    keyExtractor(item) {
-        return item.title
+    keyExtractor(item, index) {
+        return index
+    }
+
+    loadMore() {
+        if (this.state.images.length > 0 && this.state.page_info.has_next_page) {
+            CameraRoll.getPhotos({
+                //groupTypes: 'PhotoStream',
+                assetType: 'Photos',//All, Videos, Photos
+                first: 21,
+                after: this.state.page_info.end_cursor
+            })
+                .then((res) => {
+                    let newEdges = this.state.images.concat(res.edges)
+                    this.setState({
+                        images: newEdges,
+                        page_info: res.page_info
+                    })
+                })
+        }
     }
 
     render() {
-        return (<View style={{ flex: 1, backgroundColor: '#f7f7f7' }}>
+        console.log('this.state.images', this.state.images)
+        return (<View style={styles.container}>
             <View style={{ flex: 1 }}>
                 <FlatList
+                    onEndReached={this.loadMore}
+                    onEndReachedThreshold={0.3}
                     numColumns={3}
                     data={this.state.images}
                     renderItem={this.renderItem}
                     keyExtractor={this.keyExtractor}
                 />
             </View>
-            <View style={{ backgroundColor: '#393A3F', padding: 10 }}>
+            <View style={{ backgroundColor: '#393A3F', padding: 15 }}>
                 <Text style={{ color: 'white', alignSelf: 'flex-end' }}>{`已选择(${this.state.count})`}</Text>
             </View>
         </View>)
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#eee'
+    }
+})

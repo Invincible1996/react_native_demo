@@ -2,6 +2,7 @@ import React, { Component, } from 'react'
 import { View, StyleSheet, Text, Image, FlatList } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Commonstye from '../component/CommonStyle'
+import LoadingPage from '../component/LoadingPage'
 class Home extends Component {
 
   static navigationOptions = ({ navigation }) => {
@@ -24,8 +25,12 @@ class Home extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      data: []
+      data: [],
+      isLoading: true
     }
+
+    this.renderItem=this.renderItem.bind(this)
+    this.ListFooterComponent=this.ListFooterComponent.bind(this)
   }
 
   componentDidMount() {
@@ -40,7 +45,8 @@ class Home extends Component {
       let responseJson = await response.json();
       console.log('responseJson', responseJson.result.data)
       this.setState({
-        data: responseJson.result.data
+        data: responseJson.result.data,
+        isLoading:false
       }, () => console.log('this,state,data', this.state.data))
       // return responseJson.movies;
     } catch (error) {
@@ -68,20 +74,27 @@ class Home extends Component {
   }
 
   ListFooterComponent() {
-    return (<View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, backgroundColor: null, padding: 10 }}>
+    if(this.state.data && this.state.data.length >0){
+      return (<View style={{ justifyContent: 'center', alignItems: 'center', flex: 1, backgroundColor: null, padding: 10 }}>
       <Text>没有更多数据。。</Text>
     </View>)
+    }else{
+      return(<View/>)
+    }
+   
   }
 
   render() {
     return (
       <View style={styles.container}>
+       
         <FlatList
           data={this.state.data}
           renderItem={this.renderItem}
           keyExtractor={this.keyExtractor}
           ListFooterComponent={this.ListFooterComponent}
         />
+        {this.state.isLoading && <LoadingPage/>}
       </View>
     )
   }
@@ -91,12 +104,5 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f7f7f7'
   },
-  bottomSelect: {
-    backgroundColor: '#393A3F',
-    width: 20,
-    height: 10,
-    borderRadius: 5,
-    marginBottom: 3
-  }
 })
 export default Home

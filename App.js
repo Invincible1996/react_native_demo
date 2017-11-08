@@ -25,6 +25,8 @@ import Search from './src/pages/Search'
 import WebPage from './src/pages/WebPage'
 import TextInputTest from './src/pages/TextInputTest'
 import PhotosSelect from './src/pages/PhotosSelect'
+import ReceiveData from './src/pages/ReceiveData'
+import VideoPlayer from './src/pages/VideoPlayer'
 
 
 const TabConfig = {
@@ -73,7 +75,9 @@ const StackNav = StackNavigator({
   Search: { screen: Search },
   WebPage: { screen: WebPage },
   TextInputTest: { screen: TextInputTest },
-  PhotosSelect: { screen: PhotosSelect }
+  PhotosSelect: { screen: PhotosSelect },
+  ReceiveData: { screen: ReceiveData },
+  VideoPlayer: { screen: VideoPlayer },
 }, {
     initialRouteName: 'HomeNav',
     navigationOptions: ({ navigation }) => ({

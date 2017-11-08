@@ -25,57 +25,37 @@ class Person extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      data: [
-
-      ]
+      data: []
     }
 
     this.navigate = this.props.navigation.navigate;
-
-    this.goToMap = this.goToMap.bind(this)
-    this.goToPhotos = this.goToPhotos.bind(this)
-    this.gotoSearch = this.gotoSearch.bind(this)
-    this.goToTextInputTest = this.goToTextInputTest.bind(this)
+    this.goToTestPage = this.goToTestPage.bind(this)
   }
 
-  goToMap() {
-    this.navigate('BaiduMap')
+  goToTestPage(routers) {
+    this.navigate(routers)
   }
 
-  goToPhotos() {
-    this.navigate('Photos')
+  renderItems(routers, title) {
+    return (
+      <TouchableOpacity
+        onPress={() => this.goToTestPage(routers)}
+        style={styles.btn}>
+        <Text style={styles.btnText}>{title}</Text>
+      </TouchableOpacity>
+    )
   }
 
-  gotoSearch() {
-    this.navigate('Search')
-  }
-
-  goToTextInputTest() {
-    this.navigate('TextInputTest')
-  }
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity
-          onPress={this.goToMap}
-          style={styles.btn}>
-          <Text style={styles.btnText}>百度地图</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={this.goToPhotos}
-          style={styles.btn}>
-          <Text style={styles.btnText}>图片展示</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={this.gotoSearch}
-          style={styles.btn}>
-          <Text style={styles.btnText}>搜索</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={this.goToTextInputTest}
-          style={styles.btn}>
-          <Text style={styles.btnText}>多个TextInput</Text>
-        </TouchableOpacity>
+        {this.renderItems('BaiduMap', '百度地图')}
+        {this.renderItems('Photos', '图片展示')}
+        {this.renderItems('Search', '搜索')}
+        {this.renderItems('TextInputTest', '多个TextInput')}
+        {this.renderItems('ReceiveData', 'RN与原生数据传递')}
+        {this.renderItems('VideoPlayer', '视频播放')}
+        {this.renderItems('VideoPlayer', '音乐播放')}
       </View>
     )
   }
