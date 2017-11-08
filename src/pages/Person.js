@@ -1,5 +1,5 @@
 import React, { Component, } from 'react'
-import { View, StyleSheet, TouchableOpacity, Text } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, Text, ScrollView } from 'react-native'
 import CommonStyle from '../component/CommonStyle'
 import Icon from 'react-native-vector-icons/Ionicons'
 class Person extends Component {
@@ -49,13 +49,15 @@ class Person extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {this.renderItems('BaiduMap', '百度地图')}
-        {this.renderItems('Photos', '图片展示')}
-        {this.renderItems('Search', '搜索')}
-        {this.renderItems('TextInputTest', '多个TextInput')}
-        {this.renderItems('ReceiveData', 'RN与原生数据传递')}
-        {this.renderItems('VideoPlayer', '视频播放')}
-        {this.renderItems('VideoPlayer', '音乐播放')}
+        <ScrollView>
+          {this.renderItems('BaiduMap', '百度地图')}
+          {this.renderItems('Photos', '图片展示')}
+          {this.renderItems('Search', '搜索')}
+          {this.renderItems('TextInputTest', '多个TextInput')}
+          {this.renderItems('ReceiveData', 'RN与原生数据传递')}
+          {this.renderItems('VideoPlayer', '视频播放')}
+          {this.renderItems('MusicPlayer', '音乐播放')}
+        </ScrollView>
       </View>
     )
   }

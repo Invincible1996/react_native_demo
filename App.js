@@ -27,6 +27,7 @@ import TextInputTest from './src/pages/TextInputTest'
 import PhotosSelect from './src/pages/PhotosSelect'
 import ReceiveData from './src/pages/ReceiveData'
 import VideoPlayer from './src/pages/VideoPlayer'
+import MusicPlayer from './src/pages/MusicPlayer'
 
 
 const TabConfig = {
@@ -78,6 +79,7 @@ const StackNav = StackNavigator({
   PhotosSelect: { screen: PhotosSelect },
   ReceiveData: { screen: ReceiveData },
   VideoPlayer: { screen: VideoPlayer },
+  MusicPlayer: { screen: MusicPlayer },
 }, {
     initialRouteName: 'HomeNav',
     navigationOptions: ({ navigation }) => ({
