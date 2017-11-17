@@ -22,24 +22,6 @@ export default class TextInputTest extends Component {
     static navigationOptions = ({ navigation }) => {
         return {
             title: '多个TextInput',
-            headerRight: (<TouchableOpacity>
-                <Text style={{color:'#fff'}}>保存</Text>
-                </TouchableOpacity>),
-            headerLeft: (
-                <HeaderBackButton tintColor='#ffffff' onPress={() => {
-                    // alert('返回')
-                    // navigation.goBack()
-                    Alert.alert(
-                        'Alert Title',
-                        'My Alert Msg',
-                        [
-                          {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-                          {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                          {text: 'OK', onPress: () => navigation.goBack()},
-                        ],
-                        { cancelable: false }
-                      )
-                }} />),
         }
     };
     constructor(props) {
@@ -106,14 +88,6 @@ export default class TextInputTest extends Component {
         console.log('EE', this.state.EE)
         console.log('FF', this.state.FF)
     }
-
-    // renderItem(item, key) {
-    //     return (
-    //         <CommonTextInput titleName={item.titleName} key={key} onChangeText={this.onChangeText}/>
-    //     )
-    // }
-
-
 
     render() {
         return (
