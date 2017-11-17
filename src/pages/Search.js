@@ -1,14 +1,11 @@
 import React, { Component, } from 'react'
 import { View, Text, TextInput, TouchableOpacity, Platform,Image } from 'react-native'
-import BasePage from '../component/BasePage'
 import Commonstyle from '../component/CommonStyle'
 
-class Search extends Component {
-  static navigationOptions = ({ navigation }) => {
-    return {
-      header: null
-    }
-  };
+import BaseContainer from '../component/BaseContainer'
+@BaseContainer('',true)
+export default class Search extends Component {
+
   constructor(props) {
     super(props)
     this.state = {
@@ -22,11 +19,12 @@ class Search extends Component {
         { title: '圣安东尼奥马刺', url: '' },
         { title: '克利夫兰骑士', url: '' },
       ]
-
     }
+
     this.navigate = this.props.navigation.navigate;
     this.back = this.back.bind(this)
     this.goToWedPage = this.goToWedPage.bind(this)
+
   }
 
   back() {
@@ -34,11 +32,10 @@ class Search extends Component {
   }
 
   goToWedPage(item) {
-    this.navigate('WebPage', { title: item.title, url: item.url })
+    this.navigate('WebPage', { title: item.title, url: 'https://yun.kujiale.com/design/3FO4M5GRNYH0/show' })
   }
 
   renderHotItem(item, key) {
-
     return (
       <TouchableOpacity
         key={key}
@@ -84,4 +81,3 @@ class Search extends Component {
   }
 }
 
-export default Search

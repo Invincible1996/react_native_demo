@@ -2,6 +2,7 @@ import React, { Component, } from 'react'
 import { View, Text, WebView, TouchableOpacity, FlatList, Image, CameraRoll, StyleSheet } from 'react-native'
 
 import CommonStyle from '../component/CommonStyle'
+import ImageCell from '../cell/ImageCell'
 
 export default class PhotosSelect extends Component {
 
@@ -11,7 +12,7 @@ export default class PhotosSelect extends Component {
             headerRight: (<TouchableOpacity
                 onPress={navigation.state.params && navigation.state.params.clickParams}
                 style={{ marginRight: 5, padding: 5, flexDirection: 'row' }}>
-                <Text style={{ color: '#fff' }}>完成</Text>
+                <Text style={{ color: '#fff' }}>{`完成(${navigation.state.params && navigation.state.params.count})`}</Text>
             </TouchableOpacity>),
         }
     };
@@ -52,18 +53,24 @@ export default class PhotosSelect extends Component {
 
     goToBigImage(item) {
         // console.log('gotobigimage',item.index)
+        this.props.navigation.setParams({ count: (this.state.count) + 1 })
         this.setState({ count: (this.state.count) + 1 }, () => console.log('--------', this.state.count))
+
+    }
+
+    addImgs(index, isSelect) {
+        let data = [1, 2, 3, 4, 5]
+        let newData = []
+        if (isSelect) {
+            newData = data.concat(index)
+        } else {
+            newData = data.splice(index, 1)
+        }
+        console.log('data', newData)
     }
 
     renderItem(item) {
-        return (<TouchableOpacity
-            activeOpacity={1.0}
-            style={{ margin: 3, borderColor: '#ddd', borderWidth: 1 }}
-            onPress={() => this.goToBigImage(item)}>
-            <Image
-                source={{ uri: item.item.node.image.uri }}
-                style={{ width: CommonStyle.screen_width / 3 - 8, height: CommonStyle.screen_width / 3 - 8 }} />
-        </TouchableOpacity>)
+        return (<ImageCell item={item} addImgs={this.addImgs} />)
     }
 
     keyExtractor(item, index) {
@@ -93,6 +100,7 @@ export default class PhotosSelect extends Component {
         return (<View style={styles.container}>
             <View style={{ flex: 1 }}>
                 <FlatList
+                    extraData={this.state}
                     onEndReached={this.loadMore}
                     onEndReachedThreshold={0.3}
                     numColumns={3}
@@ -100,9 +108,6 @@ export default class PhotosSelect extends Component {
                     renderItem={this.renderItem}
                     keyExtractor={this.keyExtractor}
                 />
-            </View>
-            <View style={{ backgroundColor: '#393A3F', padding: 15 }}>
-                <Text style={{ color: 'white', alignSelf: 'flex-end' }}>{`已选择(${this.state.count})`}</Text>
             </View>
         </View>)
     }

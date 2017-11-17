@@ -13,21 +13,27 @@ import {
   Animated,
   Easing
 } from 'react-native';
-import { StackNavigator, TabNavigator, DrawerNavigator } from "react-navigation";
+import { 
+  StackNavigator,
+  TabNavigator, 
+  DrawerNavigator
+  } from "react-navigation";
 
-import Home from './src/pages/Home'
-import Message from './src/pages/Message'
-import Person from './src/pages/Person'
-import BaiduMap from './src/pages/BaiduMap'
-import DrawerPage from './src/pages/DrawerPage'
-import Photos from './src/pages/Photos'
-import Search from './src/pages/Search'
-import WebPage from './src/pages/WebPage'
-import TextInputTest from './src/pages/TextInputTest'
-import PhotosSelect from './src/pages/PhotosSelect'
-import ReceiveData from './src/pages/ReceiveData'
-import VideoPlayer from './src/pages/VideoPlayer'
-import MusicPlayer from './src/pages/MusicPlayer'
+import Home                     from './src/pages/Home'
+import Message                  from './src/pages/Message'
+import Person                   from './src/pages/Person'
+import BaiduMap                 from './src/pages/BaiduMap'
+import DrawerPage               from './src/pages/DrawerPage'
+import Photos                   from './src/pages/Photos'
+import Search                   from './src/pages/Search'
+import WebPage                  from './src/pages/WebPage'
+import TextInputTest            from './src/pages/TextInputTest'
+import PhotosSelect             from './src/pages/PhotosSelect'
+import ReceiveData              from './src/pages/ReceiveData'
+import VideoPlayer              from './src/pages/VideoPlayer'
+import MusicPlayer              from './src/pages/MusicPlayer'
+import TabLayout                from './src/pages/TabLayoutTest'
+import ModalTest                from './src/pages/ModalTest'
 
 
 const TabConfig = {
@@ -80,6 +86,8 @@ const StackNav = StackNavigator({
   ReceiveData: { screen: ReceiveData },
   VideoPlayer: { screen: VideoPlayer },
   MusicPlayer: { screen: MusicPlayer },
+  TabLayout: { screen: TabLayout },
+  ModalTest: { screen: ModalTest },
 }, {
     initialRouteName: 'HomeNav',
     navigationOptions: ({ navigation }) => ({

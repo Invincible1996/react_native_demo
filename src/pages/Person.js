@@ -57,6 +57,8 @@ class Person extends Component {
           {this.renderItems('ReceiveData', 'RN与原生数据传递')}
           {this.renderItems('VideoPlayer', '视频播放')}
           {this.renderItems('MusicPlayer', '音乐播放')}
+          {this.renderItems('TabLayout', 'TabLayout')}
+          {this.renderItems('ModalTest', 'ModalTest')}
         </ScrollView>
       </View>
     )

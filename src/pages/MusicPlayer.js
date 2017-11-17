@@ -1,21 +1,19 @@
 import React, { Component, } from 'react'
 import { View, Text } from 'react-native'
-import BasePage from '../component/BasePage'
-// @BasePage
-export default class MusicPlayer extends Component {
+import BaseContainer from '../component/BaseContainer'
 
-  static navigationOptions = ({ navigation }) => {
-    return {
-      headerTitle: 'MusicPlayer',
-      headerBackTitleStyle: '返回',
-    }
-  };
+@BaseContainer("MusicPlayer")
+export default class MusicPlayer extends Component {
 
   constructor(props) {
     super(props)
+    console.log(typeof BaseContainer)
     this.state = {
       data: []
     }
+  }
+  componentWillReceiveProps(nextProps) {
+    console.log('props', nextProps)
   }
 
   render() {
@@ -26,5 +24,4 @@ export default class MusicPlayer extends Component {
     )
   }
 }
-
-// export default BasePage(MusicPlayer)
+// export default BaseContainer   ('Players')(MusicPlayer)

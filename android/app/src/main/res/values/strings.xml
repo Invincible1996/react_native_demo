@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">偏偏喜欢你</string>
+    <string name="app_name">ReactDemo </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

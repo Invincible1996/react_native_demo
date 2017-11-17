@@ -41,7 +41,7 @@ class Home extends Component {
   async getMoviesFromApi() {
     try {
       // 注意这里的await语句，其所在的函数必须有async关键字声明
-      let response = await fetch('https://japi.juhe.cn/joke/img/text.from?key=8aad35fd1e3384b259293e9f491cab5e&page=1&pagesize=10');
+      let response = await fetch('https://japi.juhe.cn/joke/img/text.from?key=8aad35fd1e3384b259293e9f491cab5e&page=2&pagesize=20');
       let responseJson = await response.json();
       console.log('responseJson', responseJson.result.data)
       this.setState({

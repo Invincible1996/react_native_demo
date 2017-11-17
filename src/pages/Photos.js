@@ -1,70 +1,64 @@
 import React, { Component, } from 'react'
-import { View, Text, TouchableOpacity, Image, Dimensions, TouchableWithoutFeedback, FlatList } from 'react-native'
-
-import BasePage from '../component/BasePage'
+import { View, Text, TouchableOpacity, Image, Dimensions, TouchableWithoutFeedback, FlatList, Platform, NativeModules } from 'react-native'
 
 import CommonStyle from '../component/CommonStyle'
-class Photos extends BasePage {
-
-  static navigationOptions = ({ navigation }) => {
-    return {
-      title: '上传图片',
-      headerRight: (<View />),
-    }
-  };
+let ImagePicker = NativeModules.PickerModule
+import BaseContainer from '../component/BaseContainer'
+@BaseContainer("上传图片")
+class Photos extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
       images: [
-        {
-          title: 'kobe1',
-          url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-2.jpg'
-        },
-        {
-          title: 'kobe2',
-          url: 'https://i0.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-4.jpg'
-        },
-        {
-          title: 'kobe3',
-          url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-2.jpg'
-        },
-        {
-          title: 'kobe4',
-          url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
-        },
-        {
-          title: 'kobe7',
-          url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
-        },
-        {
-          title: 'kobe8',
-          url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
-        },
-        {
-          title: 'kobe5',
-          url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
-        },
-        {
-          title: 'kobe6',
-          url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
-        },
-        {
-          title: 'kobe9',
-          url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
-        },
-        {
-          title: 'kobe10',
-          url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
-        },
-        {
-          title: 'kobe11',
-          url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
-        },
-        {
-          title: 'kobe12',
-          url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
-        },
+        // {
+        //   title: 'kobe1',
+        //   url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-2.jpg'
+        // },
+        // {
+        //   title: 'kobe2',
+        //   url: 'https://i0.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-4.jpg'
+        // },
+        // {
+        //   title: 'kobe3',
+        //   url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-2.jpg'
+        // },
+        // {
+        //   title: 'kobe4',
+        //   url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
+        // },
+        // {
+        //   title: 'kobe7',
+        //   url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
+        // },
+        // {
+        //   title: 'kobe8',
+        //   url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
+        // },
+        // {
+        //   title: 'kobe5',
+        //   url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
+        // },
+        // {
+        //   title: 'kobe6',
+        //   url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
+        // },
+        // {
+        //   title: 'kobe9',
+        //   url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
+        // },
+        // {
+        //   title: 'kobe10',
+        //   url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
+        // },
+        // {
+        //   title: 'kobe11',
+        //   url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
+        // },
+        // {
+        //   title: 'kobe12',
+        //   url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
+        // },
       ]
     }
     this.navigate = this.props.navigation.navigate;
@@ -76,7 +70,12 @@ class Photos extends BasePage {
   }
 
   addPotos() {
-    this.navigate('PhotosSelect')
+    if (Platform.OS === 'android') {
+      // alert('打开安卓原生相册')
+      ImagePicker.openPicker(null,).then(e => console.log('e', e));
+    } else {
+      this.navigate('PhotosSelect')
+    }
   }
 
   renderHeader() {
@@ -96,7 +95,7 @@ class Photos extends BasePage {
   renderImages({ item }) {
     return (<TouchableOpacity
       activeOpacity={1.0}
-      style={{ marginTop: 8, marginBottom: 8, marginLeft: 3, marginRight: 3,backgroundColor:'red'}}
+      style={{ marginTop: 8, marginBottom: 8, marginLeft: 3, marginRight: 3, backgroundColor: 'red' }}
       onPress={this.goToBigImage}>
       <Image source={{ uri: item.url }} style={{ width: CommonStyle.screen_width / 3 - 10, height: CommonStyle.screen_width / 3 - 10 }} />
       <TouchableOpacity style={{ position: 'absolute', right: -6, top: -8 }}>

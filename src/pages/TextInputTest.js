@@ -1,14 +1,45 @@
-import React, { Component, } from 'react'
-import { View, Text, TextInput, TouchableOpacity, ScrollView, Image } from 'react-native'
+import  {
+    React,
+    Component
+} from 'react'
+import { 
+    HeaderBackButton,
+    NavigationActions } from 'react-navigation';
+import { 
+    View, 
+    Text, 
+    TextInput,
+    TouchableOpacity,
+    ScrollView,
+    Image,
+    Alert 
+} from 'react-native'
 
-import BasePage from '../component/BasePage'
+
 import CommonTextInput from '../component/CommonTextInput'
-export default class TextInputTest extends BasePage {
+export default class TextInputTest extends Component {
 
     static navigationOptions = ({ navigation }) => {
         return {
             title: '多个TextInput',
-            headerRight: (<View />),
+            headerRight: (<TouchableOpacity>
+                <Text style={{color:'#fff'}}>保存</Text>
+                </TouchableOpacity>),
+            headerLeft: (
+                <HeaderBackButton tintColor='#ffffff' onPress={() => {
+                    // alert('返回')
+                    // navigation.goBack()
+                    Alert.alert(
+                        'Alert Title',
+                        'My Alert Msg',
+                        [
+                          {text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+                          {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                          {text: 'OK', onPress: () => navigation.goBack()},
+                        ],
+                        { cancelable: false }
+                      )
+                }} />),
         }
     };
     constructor(props) {

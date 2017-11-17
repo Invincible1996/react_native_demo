@@ -1,6 +1,5 @@
 import React, { Component, } from 'react'
 import { View, Text } from 'react-native'
-import BasePage from '../component/BasePage'
 export default class BaiduMap extends Component {
 
   static navigationOptions = ({ navigation }) => {
