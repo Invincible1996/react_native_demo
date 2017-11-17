@@ -1,9 +1,17 @@
 package com.react_native_demo.photopicker;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.react_native_demo.R;
 import com.react_native_demo.photopicker.adapter.BigImageAdapter;
@@ -19,6 +27,14 @@ public class BigImageActivity extends AppCompatActivity {
     private PhotoView mPhotoView;
     private ViewPager mViewPager;
     private List<String> mImgList = new ArrayList<>();
+    private ImageView mIv_back;
+    private TextView mTv_count;
+    private int firstIndex = -1;
+    private boolean isShowHeader = true;
+
+    private static final String TAG = "BigImageActivity";
+    private BigImageAdapter mAdaper;
+    private RelativeLayout mRl_header;
 
 
     @Override
@@ -26,15 +42,68 @@ public class BigImageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_big_image);
 
+        initView();
         initData();
-        mViewPager = (ViewPager) findViewById(R.id.viewpager);
-        mViewPager.setAdapter(new BigImageAdapter(mImgList, this));
 
+        mIv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        mTv_count.setText(firstIndex + 1 + "/" + mImgList.size());
+        mAdaper = new BigImageAdapter(mImgList, this);
+        mViewPager.setAdapter(mAdaper);
+        mViewPager.setCurrentItem(firstIndex);
+        mAdaper.setOnItemClickListener(new BigImageAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick() {
+                if (isShowHeader) {
+                    mRl_header.setVisibility(View.INVISIBLE);
+                    mRl_header.setAnimation(AnimationUtils.makeOutAnimation(BigImageActivity.this, true));
+
+                } else {
+                    mRl_header.setVisibility(View.VISIBLE);
+                    mRl_header.setAnimation(AnimationUtils.makeInAnimation(BigImageActivity.this, true));
+                }
+
+                isShowHeader = !isShowHeader;
+            }
+        });
+
+
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Log.d(TAG, "onPageSelected: " + position);
+                mTv_count.setText(position + 1 + "/" + mImgList.size());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+    }
+
+    private void initView() {
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        mRl_header = (RelativeLayout) findViewById(R.id.rl_header);
+        mIv_back = (ImageView) findViewById(R.id.iv_back);
+        mTv_count = (TextView) findViewById(R.id.tv_count);
     }
 
     private void initData() {
         Intent intent = getIntent();
         List<String> data = intent.getStringArrayListExtra(Const.DATA_TO_PHOTO_VIEW);
+        firstIndex = intent.getIntExtra(Const.FIRSTR_INDEX, -1);
         mImgList.addAll(data);
     }
 }

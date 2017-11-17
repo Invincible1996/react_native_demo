@@ -64,9 +64,10 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
                     });
                     mGv_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                             Intent intent = new Intent(PhotosActivity.this, BigImageActivity.class);
                             intent.putStringArrayListExtra(Const.DATA_TO_PHOTO_VIEW, (ArrayList<String>) mImgs);
+                            intent.putExtra(Const.FIRSTR_INDEX,position);
                             startActivity(intent);
                         }
                     });

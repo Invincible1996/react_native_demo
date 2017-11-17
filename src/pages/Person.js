@@ -53,9 +53,9 @@ class Person extends Component {
           {this.renderItems('BaiduMap', '百度地图')}
           {this.renderItems('Photos', '图片展示')}
           {this.renderItems('Search', '搜索')}
-          {this.renderItems('TextInputTest', '多个TextInput')}
+          {/*this.renderItems('TextInputTest', '多个TextInput')*/}
           {this.renderItems('ReceiveData', 'RN与原生数据传递')}
-          {this.renderItems('VideoPlayer', '视频播放')}
+          {/**this.renderItems('VideoPlayer', '视频播放')*/}
           {this.renderItems('MusicPlayer', '音乐播放')}
           {this.renderItems('TabLayout', 'TabLayout')}
           {this.renderItems('ModalTest', 'ModalTest')}
