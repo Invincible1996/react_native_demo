@@ -27,15 +27,4 @@ public class MainActivity extends ReactActivity {
         StatusBarCompat.compat(this, Color.parseColor("#313237"));
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_CODE) {
-                ArrayList<String> mImgs = data.getStringArrayListExtra("mImgs");
-                Log.d(TAG, "onActivityResult: " + mImgs.size());
-
-                //TODO 把当前的图片集合传到RN界面
-            }
-        }
-    }
 }

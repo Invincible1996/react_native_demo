@@ -10,56 +10,7 @@ class Photos extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      images: [
-        // {
-        //   title: 'kobe1',
-        //   url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-2.jpg'
-        // },
-        // {
-        //   title: 'kobe2',
-        //   url: 'https://i0.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-4.jpg'
-        // },
-        // {
-        //   title: 'kobe3',
-        //   url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-2.jpg'
-        // },
-        // {
-        //   title: 'kobe4',
-        //   url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
-        // },
-        // {
-        //   title: 'kobe7',
-        //   url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
-        // },
-        // {
-        //   title: 'kobe8',
-        //   url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
-        // },
-        // {
-        //   title: 'kobe5',
-        //   url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
-        // },
-        // {
-        //   title: 'kobe6',
-        //   url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
-        // },
-        // {
-        //   title: 'kobe9',
-        //   url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
-        // },
-        // {
-        //   title: 'kobe10',
-        //   url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
-        // },
-        // {
-        //   title: 'kobe11',
-        //   url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
-        // },
-        // {
-        //   title: 'kobe12',
-        //   url: 'https://i2.letvimg.com/lc04_crawler/201710/31/23/05/1509462330636-1.jpg'
-        // },
-      ]
+      images: []
     }
     this.navigate = this.props.navigation.navigate;
 
@@ -69,10 +20,19 @@ class Photos extends Component {
     this.renderImageList = this.renderImageList.bind(this)
   }
 
+  getData(res) {
+
+    this.setState({
+      images: [...JSON.parse(res)]
+    }, () => console.log('this.state.images', this.state.images))
+  }
+
   addPotos() {
     if (Platform.OS === 'android') {
       // alert('打开安卓原生相册')
-      ImagePicker.openPicker(null,).then(e => console.log('e', e));
+      let json = JSON.stringify(this.state.images)
+      ImagePicker.openPicker(json).then((res) =>
+        this.getData(res))
     } else {
       this.navigate('PhotosSelect')
     }
@@ -92,26 +52,37 @@ class Photos extends Component {
     alert('预览')
   }
 
-  renderImages({ item }) {
+  deleteImgs(index) {
+    let listData = this.state.images
+    listData.splice(index, 1)
+    this.setState({
+      images: listData
+    })
+  }
+
+  renderImages({ item, index }) {
     return (<TouchableOpacity
       activeOpacity={1.0}
-      style={{ marginTop: 8, marginBottom: 8, marginLeft: 3, marginRight: 3, backgroundColor: 'red' }}
+      style={{ marginTop: 8, marginBottom: 8, marginLeft: 3, marginRight: 3, }}
       onPress={this.goToBigImage}>
-      <Image source={{ uri: item.url }} style={{ width: CommonStyle.screen_width / 3 - 10, height: CommonStyle.screen_width / 3 - 10 }} />
-      <TouchableOpacity style={{ position: 'absolute', right: -6, top: -8 }}>
+      <Image source={{ uri: 'file:' + item }} style={{ width: CommonStyle.screen_width / 3 - 10, height: CommonStyle.screen_width / 3 - 10 }} />
+      <TouchableOpacity
+        onPress={() => this.deleteImgs(index)}
+        style={{ position: 'absolute', right: 2, top: 2 }}>
         <Image source={require('../res/images/deleteImage.png')} style={{ width: 20, height: 20 }} />
       </TouchableOpacity>
     </TouchableOpacity>)
   }
 
-  keyExtractor(item) {
-    return item.title
+  keyExtractor(item, index) {
+    return index
   }
 
   renderImageList() {
     return (
       <View style={{ padding: 5, flex: 1 }}>
         <FlatList
+          extraData={this.state}
           numColumns={3}
           data={this.state.images}
           renderItem={this.renderImages}

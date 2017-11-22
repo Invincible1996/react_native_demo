@@ -4,7 +4,7 @@ import { View, } from 'react-native'
 class DrawerPage extends Component {
 
   static navigationOptions = {
-    drawerLabel: '月落乌啼霜满天',
+    drawerLabel: '4456456456456',
     headerTitle:'sssss',
     // drawerIcon: ({ tintColor }) => (
     //   <Image

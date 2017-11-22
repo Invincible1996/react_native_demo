@@ -52,20 +52,21 @@ public class BigImageActivity extends AppCompatActivity {
             }
         });
 
+        //初始化index
         mTv_count.setText(firstIndex + 1 + "/" + mImgList.size());
         mAdaper = new BigImageAdapter(mImgList, this);
+
+
         mViewPager.setAdapter(mAdaper);
+
         mViewPager.setCurrentItem(firstIndex);
         mAdaper.setOnItemClickListener(new BigImageAdapter.OnItemClickListener() {
             @Override
             public void onItemClick() {
                 if (isShowHeader) {
                     mRl_header.setVisibility(View.INVISIBLE);
-                    mRl_header.setAnimation(AnimationUtils.makeOutAnimation(BigImageActivity.this, true));
-
                 } else {
                     mRl_header.setVisibility(View.VISIBLE);
-                    mRl_header.setAnimation(AnimationUtils.makeInAnimation(BigImageActivity.this, true));
                 }
 
                 isShowHeader = !isShowHeader;

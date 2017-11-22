@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.common.logging.LoggingDelegate;
 import com.react_native_demo.MainActivity;
 import com.react_native_demo.R;
 import com.react_native_demo.photopicker.adapter.ImageAdapter;
@@ -53,7 +54,10 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
                 case 0x110:
                     mProgressDialog.dismiss();
                     //主线程设置适配器
+                    if(mImageAdapter == null){
                     mImageAdapter = new ImageAdapter(PhotosActivity.this, mImgs);
+                    }
+
                     mGv_photo.setAdapter(mImageAdapter);
 
                     mImageAdapter.setOnItemSelectNumListener(new ImageAdapter.OnItemSelectNumListener() {
@@ -66,8 +70,9 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                             Intent intent = new Intent(PhotosActivity.this, BigImageActivity.class);
+
                             intent.putStringArrayListExtra(Const.DATA_TO_PHOTO_VIEW, (ArrayList<String>) mImgs);
-                            intent.putExtra(Const.FIRSTR_INDEX,position);
+                            intent.putExtra(Const.FIRSTR_INDEX, position);
                             startActivity(intent);
                         }
                     });
@@ -114,6 +119,7 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
 
                 while (mCursor.moveToNext()) {
                     String path = mCursor.getString(mCursor.getColumnIndex(MediaStore.Images.Media.DATA));
+                    Log.d("path", path);
                     mImgs.add(path);
                 }
                 mCursor.close();
@@ -144,7 +150,8 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.tv_done:
                 Intent intent = new Intent();
-                intent.putStringArrayListExtra("mImgs", (ArrayList<String>) mImageAdapter.getImages());
+                ArrayList<String> images = (ArrayList<String>) mImageAdapter.getImages();
+                intent.putStringArrayListExtra("mImgs", images);
                 setResult(RESULT_OK, intent);
                 finish();
                 break;

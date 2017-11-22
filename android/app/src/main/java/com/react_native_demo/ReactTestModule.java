@@ -20,7 +20,7 @@ public class ReactTestModule extends ReactContextBaseJavaModule {
 
     private Context mContext;
 
-    Object[] arr ={"123","345","678"};
+    Object[] arr = {"123", "345", "678"};
 
     public ReactTestModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -42,10 +42,12 @@ public class ReactTestModule extends ReactContextBaseJavaModule {
         }).start();
     }
 
+
+
     @ReactMethod
-    public void tryPromise(Promise promise){
+    public void tryPromise(Promise promise) {
         WritableMap map = Arguments.createMap();
-        map.putString("aaaa","相见难，别亦难");
+        map.putString("aaaa", "相见难，别亦难");
         promise.resolve("喜欢你，那双眼动人，笑声更迷人");
-        }
+    }
 }

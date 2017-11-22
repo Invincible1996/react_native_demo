@@ -70,7 +70,7 @@ const HomeNav = TabNavigator({
 }))
 
 // const DrawerNav = DrawerNavigator({
-//   Home: { screen: HomeNav },
+//   // Home: { screen: HomeNav },
 //   DrawerPage: { screen: DrawerPage }
 // })
 

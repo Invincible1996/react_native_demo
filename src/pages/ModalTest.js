@@ -7,44 +7,71 @@ import {
     TouchableNativeFeedback,
     TouchableWithoutFeedback,
     Platform,
-    Modal
+    Modal,
+    StyleSheet,
+    BackHandler,
+    ToastAndroid
 } from 'react-native'
 import BaseContainer from '../component/BaseContainer'
 import CommonStyle from '../component/CommonStyle'
-
+var count = 2;
 @BaseContainer("ModalTest")
 export default class ModalTest extends Component {
-
-    constructor(props) {
-        super(props)
-        console.log(typeof BaseContainer)
-        this.state = {
-            showModal: false,
-            showModal2: false
-        }
-    }
-    componentWillReceiveProps(nextProps) {
-        console.log('props', nextProps)
+    state = {
+        showModal: true
     }
 
+    back() {
+        // if (count >= 1) {
+        //     this.setState({
+        //         showModal: false
+        //     }, () => console.log('this.state.showModal', this.state.showModal))
+        //     ToastAndroid.show('收到点击返回键信息...' + count, ToastAndroid.SHORT);
+        //     count--;
+        //     return true;
+        // } else {
+        //     ToastAndroid.show('收到点击返回键信息...' + count, ToastAndroid.SHORT);
+        //     return true;
+        // }
+        // console.log('456')
+    }
+    //组件挂载的时候调用
+    componentDidMount() {
+        // BackHandler.addEventListener('hardwareBackPress', this.back());
+    }
     render() {
         return (
-            <View style={{ backgroundColor: '#f7f7f7', flex: 1 }}>
-                <TouchableOpacity onPress={() => { this.setState({ showModal: true }) }}>
-                    <Text>ModalTest</Text>
-                </TouchableOpacity>
-                {this.state.showModal && <View style={{ width: CommonStyle.screen_width, height: CommonStyle.screen_height, backgroundColor: 'blue', position: 'absolute' }}>
-                    <TouchableOpacity onPress={() => { this.setState({ showModal2: true }) }}>
-                        <Text>点击取消</Text>
-                    </TouchableOpacity>
-                </View>}
-                {this.state.showModal2 && <View style={{ width: CommonStyle.screen_width, height: CommonStyle.screen_height, backgroundColor: 'red', position: 'absolute' }}>
-                    <TouchableOpacity onPress={() => { this.setState({ showModal2: false }) }}>
-                        <Text>点击取消</Text>
-                    </TouchableOpacity>
-                </View>}
-
+            <View style={styles.container}>
+                <Text style={styles.welcome}>
+                    BackAndroid模块使用实例
+      </Text>
+                <Text style={styles.instructions}>
+                    请点击返回键查看效果...
+      </Text>
+                {this.state.showModal &&
+                    <Modal visible={this.state.showModal} onRequestClose={() => { this.setState({ showModal: false }) }}>
+                        <Text>123654789</Text>
+                    </Modal>}
             </View>
-        )
+        );
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#F5FCFF',
+    },
+    welcome: {
+        fontSize: 20,
+        textAlign: 'center',
+        margin: 10,
+    },
+    instructions: {
+        textAlign: 'center',
+        color: '#333333',
+        marginBottom: 5,
+    },
+});

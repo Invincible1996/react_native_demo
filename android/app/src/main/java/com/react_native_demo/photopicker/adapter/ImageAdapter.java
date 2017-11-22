@@ -1,6 +1,7 @@
 package com.react_native_demo.photopicker.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,10 +106,10 @@ public class ImageAdapter extends BaseAdapter {
     void setImageItem(ViewHolder holder, boolean isSelect) {
         if (isSelect) {
             holder.mSelect.setImageResource(R.mipmap.select);
-//            holder.mSelect.setColorFilter(Color.parseColor("#77000000"));
+            holder.mImageView.setColorFilter(Color.parseColor("#77000000"));
         } else {
             holder.mSelect.setImageResource(R.mipmap.unselect);
-//            holder.mSelect.setColorFilter(null);
+            holder.mImageView.setColorFilter(null);
         }
     }
 
