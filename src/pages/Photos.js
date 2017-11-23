@@ -63,7 +63,7 @@ class Photos extends Component {
   renderImages({ item, index }) {
     return (<TouchableOpacity
       activeOpacity={1.0}
-      style={{ marginTop: 8, marginBottom: 8, marginLeft: 3, marginRight: 3, }}
+      style={{ marginTop: 5, marginBottom: 5, marginLeft: 3, marginRight: 3, }}
       onPress={this.goToBigImage}>
       <Image source={{ uri: 'file:' + item }} style={{ width: CommonStyle.screen_width / 3 - 10, height: CommonStyle.screen_width / 3 - 10 }} />
       <TouchableOpacity
@@ -80,7 +80,7 @@ class Photos extends Component {
 
   renderImageList() {
     return (
-      <View style={{ padding: 5, flex: 1 }}>
+      <View style={{ padding:3, flex: 1 }}>
         <FlatList
           extraData={this.state}
           numColumns={3}

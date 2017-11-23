@@ -29,13 +29,15 @@ public class ImageAdapter extends BaseAdapter {
     protected Context mContext;
     protected List<String> mDatas;
     protected String mDirPath;
+    protected List<String> mList_from_rn;
 
 
-    public ImageAdapter(Context context, List<String> datas) {
+    public ImageAdapter(Context context, List<String> datas, List<String> list_from_rn) {
 
         mContext = context;
         mDatas = datas;
         mInflater = LayoutInflater.from(context);
+        mSelectedImg.addAll(list_from_rn);
 //        mDirPath = dirPath;
 
 
@@ -58,7 +60,7 @@ public class ImageAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final String path = mDirPath + "/" + mDatas.get(position);
+        final String path = mDatas.get(position);
         final ViewHolder viewHolder;
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.item_gridview, parent, false);
@@ -74,7 +76,11 @@ public class ImageAdapter extends BaseAdapter {
 
 
         Glide.with(mContext).load(mDatas.get(position)).into(viewHolder.mImageView);
+
+
+//        mSelectedImg.addAll(mList_from_rn);
         setImageItem(viewHolder, mSelectedImg.contains(path));
+
         viewHolder.mSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,20 +88,25 @@ public class ImageAdapter extends BaseAdapter {
                     mSelectedImg.remove(path);
                     setImageItem(viewHolder, false);
                 } else {
-                    if (mSelectedImg.size()<9){
+                    if (mSelectedImg.size() < 9) {
                         mSelectedImg.add(path);
+                        System.out.println("--------22222" + path);
+                        if (mList_from_rn !=null && mList_from_rn.size()>0){
+
+                            System.out.println("--------3333" + mList_from_rn.get(0));
+                        }
                         setImageItem(viewHolder, true);
-                    }else{
+                    } else {
                         Toast.makeText(mContext, "亲，最多选9张哦！！！", Toast.LENGTH_SHORT).show();
                     }
 
                 }
-                if (mOnItemSelectNumListener!=null) {
+                if (mOnItemSelectNumListener != null) {
                     mOnItemSelectNumListener.onItemSelectNum(mSelectedImg.size());
                 }
 
 
-                Log.i("mSelectedImg", mSelectedImg.size()+"");
+                Log.i("mSelectedImg", mSelectedImg.size() + "");
             }
         });
 
@@ -122,14 +133,17 @@ public class ImageAdapter extends BaseAdapter {
         ImageView mImageView;
         ImageView mSelect;
     }
+
     OnItemSelectNumListener mOnItemSelectNumListener;
+
     public interface OnItemSelectNumListener {
-          void onItemSelectNum(int size);
+        void onItemSelectNum(int size);
     }
 
     public void setOnItemSelectNumListener(OnItemSelectNumListener onItemSelectNumListener) {
-        mOnItemSelectNumListener=onItemSelectNumListener;
+        mOnItemSelectNumListener = onItemSelectNumListener;
     }
+
     public int setSelectNum() {
         return mSelectedImg.size();
     }

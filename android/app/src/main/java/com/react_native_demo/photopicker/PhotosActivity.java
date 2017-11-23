@@ -22,11 +22,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.common.logging.LoggingDelegate;
+import com.facebook.imagepipeline.common.SourceUriType;
 import com.react_native_demo.MainActivity;
 import com.react_native_demo.R;
 import com.react_native_demo.photopicker.adapter.ImageAdapter;
 import com.react_native_demo.photopicker.constant.Const;
 import com.react_native_demo.utils.StatusBarCompat;
+
+import org.w3c.dom.ls.LSInput;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,29 +56,45 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
             switch (msg.what) {
                 case 0x110:
                     mProgressDialog.dismiss();
+
+
+                    //比较从前一个界面传过来的集合，如果相同则设置选中
+                    Intent intent = getIntent();
+                    List<String> list_from_rn = intent.getStringArrayListExtra(Const.LIST_FROM_RN);
                     //主线程设置适配器
-                    if(mImageAdapter == null){
-                    mImageAdapter = new ImageAdapter(PhotosActivity.this, mImgs);
+                    if (mImageAdapter == null) {
+                        mImageAdapter = new ImageAdapter(PhotosActivity.this, mImgs, list_from_rn);
+                    }else {
+                        mImageAdapter.notifyDataSetChanged();
                     }
 
                     mGv_photo.setAdapter(mImageAdapter);
+                    if (list_from_rn !=null &&list_from_rn.size()>0) {
 
-                    mImageAdapter.setOnItemSelectNumListener(new ImageAdapter.OnItemSelectNumListener() {
-                        @Override
-                        public void onItemSelectNum(int size) {
-                            mTv_done.setText("完成(" + size + ")");
-                        }
-                    });
-                    mGv_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                            Intent intent = new Intent(PhotosActivity.this, BigImageActivity.class);
+                        mTv_done.setText("完成(" + list_from_rn.size() + ")");
+                    }
 
-                            intent.putStringArrayListExtra(Const.DATA_TO_PHOTO_VIEW, (ArrayList<String>) mImgs);
-                            intent.putExtra(Const.FIRSTR_INDEX, position);
-                            startActivity(intent);
-                        }
-                    });
+//                    }else {
+                        mImageAdapter.setOnItemSelectNumListener(new ImageAdapter.OnItemSelectNumListener() {
+                            @Override
+                            public void onItemSelectNum(int size) {
+                                mTv_done.setText("完成(" + size + ")");
+                            }
+                        });
+//                    }
+
+
+
+//                    mGv_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                        @Override
+//                        public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+//                            Intent intent = new Intent(PhotosActivity.this, BigImageActivity.class);
+//
+//                            intent.putStringArrayListExtra(Const.DATA_TO_PHOTO_VIEW, (ArrayList<String>) mImgs);
+//                            intent.putExtra(Const.FIRSTR_INDEX, position);
+//                            startActivity(intent);
+//                        }
+//                    });
 
             }
         }

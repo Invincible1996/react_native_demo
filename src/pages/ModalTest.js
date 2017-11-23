@@ -10,48 +10,43 @@ import {
     Modal,
     StyleSheet,
     BackHandler,
-    ToastAndroid
+    ToastAndroid,
+    Al
 } from 'react-native'
+import { NavigationActions } from 'react-navigation'
 import BaseContainer from '../component/BaseContainer'
 import CommonStyle from '../component/CommonStyle'
 var count = 2;
 @BaseContainer("ModalTest")
 export default class ModalTest extends Component {
-    state = {
-        showModal: true
-    }
 
-    back() {
-        // if (count >= 1) {
-        //     this.setState({
-        //         showModal: false
-        //     }, () => console.log('this.state.showModal', this.state.showModal))
-        //     ToastAndroid.show('收到点击返回键信息...' + count, ToastAndroid.SHORT);
-        //     count--;
-        //     return true;
-        // } else {
-        //     ToastAndroid.show('收到点击返回键信息...' + count, ToastAndroid.SHORT);
-        //     return true;
-        // }
-        // console.log('456')
+    
+
+    constructor(props){
+        super(props)
+        this.state={
+            showModal: true
+        }
     }
-    //组件挂载的时候调用
+   
     componentDidMount() {
-        // BackHandler.addEventListener('hardwareBackPress', this.back());
+        BackHandler.addEventListener('hardwareBackPress', function () {
+           
+            
+
+            return true
+        });
     }
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.welcome}>
-                    BackAndroid模块使用实例
-      </Text>
-                <Text style={styles.instructions}>
-                    请点击返回键查看效果...
-      </Text>
-                {this.state.showModal &&
-                    <Modal visible={this.state.showModal} onRequestClose={() => { this.setState({ showModal: false }) }}>
-                        <Text>123654789</Text>
-                    </Modal>}
+             
+                <TouchableOpacity onPress={()=>{
+                    const backAction = NavigationActions.back()
+                    this.props.navigation.dispatch(backAction)
+                }}>
+                    <Text>back</Text>
+                </TouchableOpacity>
             </View>
         );
     }

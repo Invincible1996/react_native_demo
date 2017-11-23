@@ -4,17 +4,18 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.facebook.react.bridge.BaseActivityEventListener;
-import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.uimanager.IllegalViewOperationException;
-import com.facebook.react.uimanager.PixelUtil;
 import com.react_native_demo.MainActivity;
+import com.react_native_demo.photopicker.constant.Const;
+import com.react_native_demo.utils.CollectionUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,15 +46,18 @@ public class PickerModule extends ReactContextBaseJavaModule {
 
                         Log.d("mImgs", mImgs.size() + "---");
 
-                        list.clear();
-                        for (int i = 0; i < mImgs.size(); i++) {
-                            String path = mImgs.get(i).substring(5);
-                            list.add(path);
-                        }
+//                        list.clear();
+//                        for (int i = 0; i < mImgs.size(); i++) {
+//                            String path = mImgs.get(i).substring(5);
+//                            list.add(path);
+//                        }
 
-                        Log.d("list", list.size() + "");
+//                        Log.d("list", list.size() + "");
 
-                        String json = JSON.toJSONString(list);
+                        String json = JSON.toJSONString(mImgs);
+
+
+                        Log.d("mJson", json);
 
                         Log.d("json", "onActivityResult: " + json);
 
@@ -71,6 +75,7 @@ public class PickerModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void openPicker(String json, Promise promise) {
+        List<String> mList = new ArrayList<>();
         Activity activity = getCurrentActivity();
         mPromise = promise;
 
@@ -79,12 +84,24 @@ public class PickerModule extends ReactContextBaseJavaModule {
             return;
         }
 
-//        Log.d("Json From RN", json);
+        Log.d("Json From RN", json.length() + " ");
 
-//        List<ImgsBean> bean = JSON.parseArray(json, ImgsBean.class);
-//        Log.d("bean",bean.toString());
+        try {
+            JSONArray array = JSON.parseArray(json);
+            Log.d("array", array.get(0).toString());
+            for (int i = 0; i < array.size(); i++) {
+                mList.add(array.get(i).toString());
+            }
+
+            Log.d("mList", mList.size() + "");
+
+        } catch (Exception e) {
+
+        }
+
+
         Intent intent = new Intent(activity, PhotosActivity.class);
-
+        intent.putStringArrayListExtra(Const.LIST_FROM_RN,(ArrayList<String>) mList);
         activity.startActivityForResult(intent, MainActivity.REQUEST_CODE);
 
     }
