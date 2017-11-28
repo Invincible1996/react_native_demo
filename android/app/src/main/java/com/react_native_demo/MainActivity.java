@@ -27,4 +27,6 @@ public class MainActivity extends ReactActivity {
         StatusBarCompat.compat(this, Color.parseColor("#313237"));
     }
 
+
+
 }

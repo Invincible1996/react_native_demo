@@ -48,8 +48,9 @@ class Photos extends Component {
     )
   }
 
-  goToBigImage() {
-    alert('预览')
+  goToBigImage(index) {
+    let json = JSON.stringify(this.state.images)
+    ImagePicker.goToBigImage(json, index)
   }
 
   deleteImgs(index) {
@@ -64,7 +65,7 @@ class Photos extends Component {
     return (<TouchableOpacity
       activeOpacity={1.0}
       style={{ marginTop: 5, marginBottom: 5, marginLeft: 3, marginRight: 3, }}
-      onPress={this.goToBigImage}>
+      onPress={()=>this.goToBigImage(index)}>
       <Image source={{ uri: 'file:' + item }} style={{ width: CommonStyle.screen_width / 3 - 10, height: CommonStyle.screen_width / 3 - 10 }} />
       <TouchableOpacity
         onPress={() => this.deleteImgs(index)}
@@ -80,7 +81,7 @@ class Photos extends Component {
 
   renderImageList() {
     return (
-      <View style={{ padding:3, flex: 1 }}>
+      <View style={{ padding: 3, flex: 1 }}>
         <FlatList
           extraData={this.state}
           numColumns={3}

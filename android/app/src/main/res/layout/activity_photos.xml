@@ -23,24 +23,24 @@
             android:src="@drawable/picture_back"/>
 
         <TextView
-            android:textSize="18sp"
-            android:textColor="#fff"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="选择照片"/>
+            android:text="选择照片"
+            android:textColor="#fff"
+            android:textSize="18sp"/>
 
         <TextView
             android:id="@+id/tv_done"
-            android:clickable="true"
-            android:background="@null"
-            android:layout_marginRight="5dp"
-            android:textColor="#fff"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="完成()"/>
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:background="@null"
+            android:clickable="true"
+            android:text="完成()"
+            android:textColor="#fff"/>
 
     </RelativeLayout>
 
@@ -55,13 +55,13 @@
         android:verticalSpacing="2dp"/>
 
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/id_bottom_ly"
         android:layout_width="match_parent"
         android:layout_height="50dip"
         android:layout_alignParentBottom="true"
         android:background="#e0000000"
         android:clickable="true">
+
 
         <TextView
             android:id="@+id/id_choose_dir"

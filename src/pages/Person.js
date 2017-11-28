@@ -59,6 +59,8 @@ class Person extends Component {
           {this.renderItems('MusicPlayer', '音乐播放')}
           {this.renderItems('TabLayout', 'TabLayout')}
           {this.renderItems('ModalTest', 'ModalTest')}
+          {this.renderItems('TextViewTest', 'TextViewTest')}
+          {this.renderItems('GlideTest', 'GlideTest')}
         </ScrollView>
       </View>
     )

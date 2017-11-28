@@ -32,13 +32,15 @@ public class ImageAdapter extends BaseAdapter {
     protected List<String> mList_from_rn;
 
 
-    public ImageAdapter(Context context, List<String> datas, List<String> list_from_rn) {
+    public ImageAdapter(Context context, List<String> datas, List<String> list_from_rn, String dirPath) {
 
         mContext = context;
         mDatas = datas;
         mInflater = LayoutInflater.from(context);
+        mDirPath = dirPath;
+        if (list_from_rn !=null){
         mSelectedImg.addAll(list_from_rn);
-//        mDirPath = dirPath;
+        }
 
 
     }
@@ -60,7 +62,10 @@ public class ImageAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        final String path = mDatas.get(position);
+
+
+        final String path = mDirPath +"/"+ mDatas.get(position);
+
         final ViewHolder viewHolder;
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.item_gridview, parent, false);
@@ -75,10 +80,8 @@ public class ImageAdapter extends BaseAdapter {
         }
 
 
-        Glide.with(mContext).load(mDatas.get(position)).into(viewHolder.mImageView);
+        Glide.with(mContext).load(path).into(viewHolder.mImageView);
 
-
-//        mSelectedImg.addAll(mList_from_rn);
         setImageItem(viewHolder, mSelectedImg.contains(path));
 
         viewHolder.mSelect.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +94,7 @@ public class ImageAdapter extends BaseAdapter {
                     if (mSelectedImg.size() < 9) {
                         mSelectedImg.add(path);
                         System.out.println("--------22222" + path);
-                        if (mList_from_rn !=null && mList_from_rn.size()>0){
+                        if (mList_from_rn != null && mList_from_rn.size() > 0) {
 
                             System.out.println("--------3333" + mList_from_rn.get(0));
                         }

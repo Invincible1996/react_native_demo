@@ -3,6 +3,10 @@ package com.react_native_demo.photopicker;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.midi.MidiManager;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -14,9 +18,15 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.react_native_demo.MainActivity;
+import com.react_native_demo.image.ImageCompression;
 import com.react_native_demo.photopicker.constant.Const;
 import com.react_native_demo.utils.CollectionUtil;
+import com.react_native_demo.utils.ImageUtil;
+import com.react_native_demo.utils.ImageUtils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,11 +36,15 @@ import java.util.List;
 
 public class PickerModule extends ReactContextBaseJavaModule {
 
+    private int width;
+    private int height;
+
     private Promise mPromise;
     private static final String E_ACTIVITY_DOES_NOT_EXIST = "E_ACTIVITY_DOES_NOT_EXIST";
 
     private Context mContext;
     private List<String> list = new ArrayList<>();
+    private Activity mActivity;
 
     public PickerModule(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -42,30 +56,40 @@ public class PickerModule extends ReactContextBaseJavaModule {
             public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
                 if (requestCode == MainActivity.REQUEST_CODE) {
                     if (resultCode == Activity.RESULT_OK) {
+                        //相册选择页面返回的数据
                         List<String> mImgs = data.getStringArrayListExtra("mImgs");
 
-                        Log.d("mImgs", mImgs.size() + "---");
-
+                        //压缩图片
+//                        Bitmap bitmap = ImageCompression.getInstance().compressionImage(mImgs.get(0), width, height);
 //                        list.clear();
 //                        for (int i = 0; i < mImgs.size(); i++) {
-//                            String path = mImgs.get(i).substring(5);
-//                            list.add(path);
+//                            String image = ImageUtils.getInstance().getImage(100, 100, mImgs.get(i));
+//                            list.add(image);
 //                        }
 
-//                        Log.d("list", list.size() + "");
-
                         String json = JSON.toJSONString(mImgs);
-
-
-                        Log.d("mJson", json);
-
-                        Log.d("json", "onActivityResult: " + json);
-
                         mPromise.resolve(json);
                     }
                 }
             }
         });
+    }
+
+
+    /**
+     * 压缩图片
+     */
+    private void compressionImage(String path) {
+
+        FileInputStream is = null;
+        try {
+            is = new FileInputStream(path);
+            File compressFile = new File(Environment.getExternalStorageDirectory(), ".jpg");
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -76,15 +100,15 @@ public class PickerModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void openPicker(String json, Promise promise) {
         List<String> mList = new ArrayList<>();
-        Activity activity = getCurrentActivity();
+        mActivity = getCurrentActivity();
         mPromise = promise;
 
-        if (activity == null) {
+        if (mActivity == null) {
             promise.reject(E_ACTIVITY_DOES_NOT_EXIST, "Activity doesn't exist");
             return;
         }
 
-        Log.d("Json From RN", json.length() + " ");
+//        Log.d("Json From RN", json.length() + " ");
 
         try {
             JSONArray array = JSON.parseArray(json);
@@ -100,10 +124,31 @@ public class PickerModule extends ReactContextBaseJavaModule {
         }
 
 
-        Intent intent = new Intent(activity, PhotosActivity.class);
-        intent.putStringArrayListExtra(Const.LIST_FROM_RN,(ArrayList<String>) mList);
-        activity.startActivityForResult(intent, MainActivity.REQUEST_CODE);
+        Intent intent = new Intent(mActivity, PhotosActivity.class);
+        intent.putStringArrayListExtra(Const.LIST_FROM_RN, (ArrayList<String>) mList);
+        mActivity.startActivityForResult(intent, MainActivity.REQUEST_CODE);
 
+    }
+
+    @ReactMethod
+    public void goToBigImage(String json,int index) {
+        List<String> mList = new ArrayList<>();
+        try {
+            JSONArray array = JSON.parseArray(json);
+            Log.d("array", array.get(0).toString());
+            for (int i = 0; i < array.size(); i++) {
+                mList.add(array.get(i).toString());
+            }
+
+            Log.d("mList", mList.size() + "");
+
+        } catch (Exception e) {
+
+        }
+        Intent intent = new Intent(mActivity, BigImageActivity.class);
+        intent.putStringArrayListExtra(Const.LIST_FROM_RN, (ArrayList<String>) mList);
+        intent.putExtra(Const.FIRSTR_INDEX ,index);
+        mActivity.startActivity(intent);
     }
 
 

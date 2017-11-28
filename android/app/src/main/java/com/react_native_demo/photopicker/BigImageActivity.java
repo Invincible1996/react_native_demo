@@ -103,7 +103,7 @@ public class BigImageActivity extends AppCompatActivity {
 
     private void initData() {
         Intent intent = getIntent();
-        List<String> data = intent.getStringArrayListExtra(Const.DATA_TO_PHOTO_VIEW);
+        List<String> data = intent.getStringArrayListExtra(Const.LIST_FROM_RN);
         firstIndex = intent.getIntExtra(Const.FIRSTR_INDEX, -1);
         mImgList.addAll(data);
     }
