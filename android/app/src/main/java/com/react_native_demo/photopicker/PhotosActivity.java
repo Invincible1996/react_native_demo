@@ -1,6 +1,7 @@
 package com.react_native_demo.photopicker;
 
 import android.app.ProgressDialog;
+import android.content.AsyncQueryHandler;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,22 +12,19 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.ListPopupWindow;
-import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.Toolbar;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.react_native_demo.R;
 import com.react_native_demo.photopicker.adapter.ImageAdapter;
+import com.react_native_demo.photopicker.adapter.PhotosAdapter;
 import com.react_native_demo.photopicker.bean.ImgFolderBean;
 import com.react_native_demo.photopicker.constant.Const;
 import com.react_native_demo.photopicker.view.ListViewPopupWindow;
@@ -42,7 +40,7 @@ import java.util.Set;
 
 public class PhotosActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Toolbar mToolbar;
+
     private ImageView mIv_back;
     private TextView mTv_done;
     private GridView mGv_photo;
@@ -57,6 +55,9 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
 
     private File mCurrentDir;
 
+    /**
+     * 所有文件夹的集合
+     */
     private List<ImgFolderBean> mFolderBeen = new ArrayList<>();
 
     private ListViewPopupWindow mListPopupWindow;
@@ -79,13 +80,14 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
                     Intent intent = getIntent();
                     List<String> list_from_rn = intent.getStringArrayListExtra(Const.LIST_FROM_RN);
 
-//                    if (mCurrentDir == null) {
-//                        Toast.makeText(PhotosActivity.this, "一张图片都没扫到哦！！", Toast.LENGTH_SHORT).show();
-//                        return;
-//                    }
+                    if (mCurrentDir == null) {
+                        Toast.makeText(PhotosActivity.this, "一张图片都没扫到哦！！", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
                     System.out.println(mCurrentDir + "------");
                     mImgs = Arrays.asList(mCurrentDir.list());
+                    mTv_totalCount.setText(mImgs.size() + "");
 
                     Log.d(TAG, mImgs.size() + " ");
 
@@ -109,28 +111,18 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
                         }
                     });
 
-
-//                    mGv_photo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                        @Override
-//                        public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-//                            Intent intent = new Intent(PhotosActivity.this, BigImageActivity.class);
-//
-//                            intent.putStringArrayListExtra(Const.DATA_TO_PHOTO_VIEW, (ArrayList<String>) mImgs);
-//                            intent.putExtra(Const.FIRSTR_INDEX, position);
-//                            startActivity(intent);
-//                        }
-//                    });
-
                     initDirPopupWindow();
-
                     initEvent();
 
             }
         }
-
-
     };
+    private TextView mTv_title;
+    private Button mBt_preview;
 
+    /**
+     * popupWindow的事件
+     */
     private void initEvent() {
         mBottom_layout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,7 +167,6 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public boolean accept(File file, String fileName) {
                         if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png")) {
-
                             return true;
                         }
                         return false;
@@ -184,10 +175,17 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
                 }));
 
                 mImageAdapter = new ImageAdapter(PhotosActivity.this, mImgs, null, mCurrentDir.getAbsolutePath());
+
                 mGv_photo.setAdapter(mImageAdapter);
 
-                mTv_totalCount.setText(mImgs.size()+"");
-
+                mTv_totalCount.setText(mImgs.size() + "");
+                mTv_done.setText("完成");
+                mImageAdapter.setOnItemSelectNumListener(new ImageAdapter.OnItemSelectNumListener() {
+                    @Override
+                    public void onItemSelectNum(int size) {
+                        mTv_done.setText("完成(" + size + ")");
+                    }
+                });
                 mBottom_choose_dir.setText(imgFolderBean.getName());
 
                 mListPopupWindow.dismiss();
@@ -228,79 +226,92 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
             return;
         }
 
-        mProgressDialog = ProgressDialog.show(this, null, "数据加载中...");
+//        mProgressDialog = ProgressDialog.show(this, null, "数据加载中...");
+
+        PhotosQueryHandler mQueryHandler = new PhotosQueryHandler(getContentResolver());
+
+        String[] projection = null;
+        String selection = MediaStore.Images.Media.MIME_TYPE + "= ? or " + MediaStore.Images.Media.MIME_TYPE + "= ?";
+        String[] selectionArgs = new String[]{"image/jpeg", "image/png"};
+        String orderBy = MediaStore.Images.Media.DATE_MODIFIED;
+
+        PhotosAdapter adapter = new PhotosAdapter(this, null);
+
+        mQueryHandler.startQuery(0, adapter,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null,
+                MediaStore.Images.Media.MIME_TYPE + "= ? or " + MediaStore.Images.Media.MIME_TYPE + "= ?",
+                new String[]{"image/jpeg", "image/png"}, MediaStore.Images.Media.DATE_MODIFIED);
 
 
         //读取SD卡中图片
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-//                String firstImage = null;
-                ContentResolver mContentResolver = PhotosActivity.this
-                        .getContentResolver();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                ContentResolver mContentResolver = PhotosActivity.this
+//                        .getContentResolver();
+//
+//                // 只查询jpeg和png的图片
+//                Cursor mCursor = mContentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null,
+//                        MediaStore.Images.Media.MIME_TYPE + "= ? or " + MediaStore.Images.Media.MIME_TYPE + "= ?",
+//                        new String[]{"image/jpeg", "image/png"}, MediaStore.Images.Media.DATE_MODIFIED);
+//
+//                Set<String> mDirPaths = new HashSet<String>();//防止重复扫描
+//
+//                while (mCursor.moveToNext()) {
+//                    String path = mCursor.getString(mCursor.getColumnIndex(MediaStore.Images.Media.DATA));
+//
+//                    File parentFile = new File(path).getParentFile();
+//                    if (parentFile == null) {
+//                        continue;
+//                    }
+//
+//                    String dirPath = parentFile.getAbsolutePath();
+//
+//                    ImgFolderBean imgFolderBean = null;
+//                    if (mDirPaths.contains(dirPath)) {
+//                        continue;
+//                    } else {
+//                        mDirPaths.add(dirPath);
+//                        imgFolderBean = new ImgFolderBean();
+//                        imgFolderBean.setDir(dirPath);
+//                        imgFolderBean.setFistImgPath(path);
+//                    }
+//
+//                    if (parentFile.list() == null) {
+//                        continue;
+//                    }
+//
+//                    int picSize = parentFile.list(new FilenameFilter() {
+//                        @Override
+//                        public boolean accept(File file, String fileName) {
+//                            if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png")) {
+//
+//                                return true;
+//                            }
+//                            return false;
+//                        }
+//
+//                    }).length;
+//
+//                    totalCount += picSize;
+//
+//                    imgFolderBean.setCount(picSize);
+//                    mFolderBeen.add(imgFolderBean);
+//
+//                    if (picSize > mMaxCount) {
+//                        mMaxCount = picSize;
+//                        mCurrentDir = parentFile;
+//                    }
+//                }
+//
+//
+//                mHandler.sendEmptyMessage(0x110);
+//                mCursor.close();
+//
+//            }
+//        }).start();
 
-                // 只查询jpeg和png的图片
-                Cursor mCursor = mContentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null,
-                        MediaStore.Images.Media.MIME_TYPE + "= ? or " + MediaStore.Images.Media.MIME_TYPE + "= ?",
-                        new String[]{"image/jpeg", "image/png"}, MediaStore.Images.Media.DATE_MODIFIED);
 
-                Set<String> mDirPaths = new HashSet<String>();//防止重复扫描
-
-                while (mCursor.moveToNext()) {
-                    String path = mCursor.getString(mCursor.getColumnIndex(MediaStore.Images.Media.DATA));
-
-                    File parentFile = new File(path).getParentFile();
-                    if (parentFile == null) {
-                        continue;
-                    }
-
-                    String dirPath = parentFile.getAbsolutePath();
-
-                    ImgFolderBean imgFolderBean = null;
-                    if (mDirPaths.contains(mDirPaths)) {
-                        continue;
-                    } else {
-                        mDirPaths.add(dirPath);
-                        imgFolderBean = new ImgFolderBean();
-                        imgFolderBean.setDir(dirPath);
-                        imgFolderBean.setFistImgPath(path);
-                    }
-
-                    if (parentFile.list() == null) {
-                        continue;
-                    }
-
-                    int picSize = parentFile.list(new FilenameFilter() {
-                        @Override
-                        public boolean accept(File file, String fileName) {
-                            if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png")) {
-
-                                return true;
-                            }
-                            return false;
-                        }
-
-                    }).length;
-
-                    totalCount += picSize;
-
-                    imgFolderBean.setCount(picSize);
-                    mFolderBeen.add(imgFolderBean);
-
-                    if (picSize > mMaxCount) {
-                        mMaxCount = picSize;
-                        mCurrentDir = parentFile;
-                    }
-
-                }
-                mCursor.close();
-
-            }
-        }).start();
-
-        Message message = Message.obtain();
-        message.what = 0x110;
-        mHandler.sendMessageDelayed(message, 100);
     }
 
     private void initView() {
@@ -311,9 +322,13 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
         mBottom_layout = (RelativeLayout) findViewById(R.id.id_bottom_ly);
         mBottom_choose_dir = (TextView) findViewById(R.id.id_choose_dir);
         mTv_totalCount = (TextView) findViewById(R.id.id_total_count);
+        mTv_title = (TextView) findViewById(R.id.tv_title);
+        mBt_preview = (Button) findViewById(R.id.btn_preview);
 
         mIv_back.setOnClickListener(this);
         mTv_done.setOnClickListener(this);
+        mBt_preview.setOnClickListener(this);
+
 
     }
 
@@ -330,6 +345,12 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
+            case R.id.btn_preview:
+                Intent intent2 = new Intent(this, BigImageActivity.class);
+                intent2.putStringArrayListExtra(Const.LIST_FROM_RN, (ArrayList<String>) mImageAdapter.getImages());
+                startActivity(intent2);
+                break;
         }
     }
+
 }

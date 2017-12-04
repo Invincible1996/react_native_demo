@@ -7,7 +7,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -64,7 +67,9 @@ public class BigImageActivity extends AppCompatActivity {
             @Override
             public void onItemClick() {
                 if (isShowHeader) {
+
                     mRl_header.setVisibility(View.INVISIBLE);
+
                 } else {
                     mRl_header.setVisibility(View.VISIBLE);
                 }
@@ -104,7 +109,7 @@ public class BigImageActivity extends AppCompatActivity {
     private void initData() {
         Intent intent = getIntent();
         List<String> data = intent.getStringArrayListExtra(Const.LIST_FROM_RN);
-        firstIndex = intent.getIntExtra(Const.FIRSTR_INDEX, -1);
+        firstIndex = intent.getIntExtra(Const.FIRSTR_INDEX, 0);
         mImgList.addAll(data);
     }
 }

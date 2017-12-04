@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="10dp">
 
     <ImageView
         android:id="@+id/iv_dir"
@@ -34,20 +34,22 @@
             android:textSize="12sp"/>
 
         <TextView
-            android:textColor="#444"
             android:id="@+id/id_dir_item_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:textColor="#444"
             android:textSize="10sp"/>
     </LinearLayout>
 
     <ImageView
-        android:layout_centerVertical="true"
-        android:src="@mipmap/ic_launcher"
-        android:layout_marginRight="20dp"
+        android:visibility="gone"
+        android:id="@+id/iv_select_dir"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_alignParentRight="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:src="@mipmap/select"/>
 
 </RelativeLayout>

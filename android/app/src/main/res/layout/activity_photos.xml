@@ -1,88 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.react_native_demo.photopicker.PhotosActivity">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.react_native_demo.photopicker.PhotosActivity">
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="#393A3F"
-        android:padding="5dp">
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="#393A3F"
+            android:padding="5dp">
 
         <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:padding="5dp"
-            android:src="@drawable/picture_back"/>
+                android:id="@+id/iv_back"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:padding="5dp"
+                android:src="@drawable/picture_back"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="选择照片"
-            android:textColor="#fff"
-            android:textSize="18sp"/>
+                android:id="@+id/tv_title"
+                android:drawablePadding="2dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="选择照片"
+                android:textColor="#fff"
+                android:textSize="18sp"/>
 
         <TextView
-            android:id="@+id/tv_done"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:background="@null"
-            android:clickable="true"
-            android:text="完成()"
-            android:textColor="#fff"/>
+                android:id="@+id/tv_done"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:background="@null"
+                android:clickable="true"
+                android:text="完成()"
+                android:textColor="#fff"/>
 
     </RelativeLayout>
 
     <GridView
-        android:id="@+id/gv_photo"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="2dp"
-        android:layout_weight="1"
-        android:horizontalSpacing="2dp"
-        android:numColumns="3"
-        android:verticalSpacing="2dp"/>
+            android:id="@+id/gv_photo"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:horizontalSpacing="2dp"
+            android:numColumns="3"
+            android:verticalSpacing="2dp"/>
 
     <RelativeLayout
-        android:id="@+id/id_bottom_ly"
-        android:layout_width="match_parent"
-        android:layout_height="50dip"
-        android:layout_alignParentBottom="true"
-        android:background="#e0000000"
-        android:clickable="true">
+            android:id="@+id/id_bottom_ly"
+            android:layout_width="match_parent"
+            android:layout_height="50dip"
+            android:layout_alignParentBottom="true"
+            android:background="#e0000000"
+            android:clickable="true">
 
 
         <TextView
-            android:id="@+id/id_choose_dir"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:gravity="center_vertical"
-            android:paddingLeft="10dip"
-            android:text="所有图片"
-            android:textColor="@android:color/white"/>
+                android:id="@+id/id_choose_dir"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dip"
+                android:text="所有图片"
+                android:textColor="@android:color/white"/>
+
+        <Button
+                android:id="@+id/btn_preview"
+                android:layout_marginRight="20dp"
+                android:textColor="#fff"
+                android:layout_centerVertical="true"
+                android:background="@drawable/shape_select"
+                android:text="预览"
+                android:layout_toLeftOf="@+id/id_total_count"
+                android:layout_width="50dp"
+                android:layout_height="30dp"/>
 
         <TextView
-            android:id="@+id/id_total_count"
-            android:layout_width="50dip"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:gravity="center"
-            android:text="0张"
-            android:textColor="@android:color/white"/>
+                android:id="@+id/id_total_count"
+                android:layout_width="50dip"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="0张"
+                android:textColor="@android:color/white"/>
     </RelativeLayout>
 
 </LinearLayout>

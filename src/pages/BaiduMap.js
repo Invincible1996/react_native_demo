@@ -1,5 +1,5 @@
 import React, { Component, } from 'react'
-import { View, Text } from 'react-native'
+import { View, Text ,WebView} from 'react-native'
 export default class BaiduMap extends Component {
 
   static navigationOptions = ({ navigation }) => {
@@ -17,7 +17,7 @@ export default class BaiduMap extends Component {
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: '#f7f7f7', justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{fontSize:15}}>地图暂未集成哦</Text>
+        <WebView javaScriptEnabled={true} source={{uri:'https://3g.163.com/v/video/VQ3DIKQOE.html'}} />
       </View>
     )
   }

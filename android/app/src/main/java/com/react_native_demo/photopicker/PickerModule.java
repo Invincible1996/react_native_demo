@@ -3,12 +3,8 @@ package com.react_native_demo.photopicker;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.midi.MidiManager;
 import android.os.Environment;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -18,11 +14,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.react_native_demo.MainActivity;
-import com.react_native_demo.image.ImageCompression;
 import com.react_native_demo.photopicker.constant.Const;
-import com.react_native_demo.utils.CollectionUtil;
-import com.react_native_demo.utils.ImageUtil;
-import com.react_native_demo.utils.ImageUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -131,7 +123,7 @@ public class PickerModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void goToBigImage(String json,int index) {
+    public void goToBigImage(String json, int index) {
         List<String> mList = new ArrayList<>();
         try {
             JSONArray array = JSON.parseArray(json);
@@ -147,7 +139,7 @@ public class PickerModule extends ReactContextBaseJavaModule {
         }
         Intent intent = new Intent(mActivity, BigImageActivity.class);
         intent.putStringArrayListExtra(Const.LIST_FROM_RN, (ArrayList<String>) mList);
-        intent.putExtra(Const.FIRSTR_INDEX ,index);
+        intent.putExtra(Const.FIRSTR_INDEX, index);
         mActivity.startActivity(intent);
     }
 

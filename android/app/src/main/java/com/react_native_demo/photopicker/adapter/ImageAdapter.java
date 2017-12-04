@@ -84,7 +84,7 @@ public class ImageAdapter extends BaseAdapter {
 
         setImageItem(viewHolder, mSelectedImg.contains(path));
 
-        viewHolder.mSelect.setOnClickListener(new View.OnClickListener() {
+        viewHolder.mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mSelectedImg.contains(path)) {
@@ -93,10 +93,7 @@ public class ImageAdapter extends BaseAdapter {
                 } else {
                     if (mSelectedImg.size() < 9) {
                         mSelectedImg.add(path);
-                        System.out.println("--------22222" + path);
                         if (mList_from_rn != null && mList_from_rn.size() > 0) {
-
-                            System.out.println("--------3333" + mList_from_rn.get(0));
                         }
                         setImageItem(viewHolder, true);
                     } else {
@@ -107,9 +104,6 @@ public class ImageAdapter extends BaseAdapter {
                 if (mOnItemSelectNumListener != null) {
                     mOnItemSelectNumListener.onItemSelectNum(mSelectedImg.size());
                 }
-
-
-                Log.i("mSelectedImg", mSelectedImg.size() + "");
             }
         });
 
