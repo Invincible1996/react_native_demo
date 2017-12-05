@@ -35,6 +35,7 @@ import MusicPlayer              from './src/pages/MusicPlayer'
 import TabLayout                from './src/pages/TabLayoutTest'
 import ModalTest                from './src/pages/ModalTest'
 import GlideTest                from './src/pages/GlideTest'
+import DetailPage               from './src/pages/DetailPage'
 
 
 const TabConfig = {
@@ -90,6 +91,7 @@ const StackNav = StackNavigator({
   TabLayout: { screen: TabLayout },
   ModalTest: { screen: ModalTest },
   GlideTest: { screen: GlideTest },
+  DetailPage: { screen: DetailPage },
 }, {
     initialRouteName: 'HomeNav',
     navigationOptions: ({ navigation }) => ({
