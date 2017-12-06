@@ -22,6 +22,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.react_native_demo.R;
 import com.react_native_demo.photopicker.adapter.ImageAdapter;
 import com.react_native_demo.photopicker.adapter.PhotosAdapter;
@@ -108,6 +109,7 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
                         @Override
                         public void onItemSelectNum(int size) {
                             mTv_done.setText("完成(" + size + ")");
+                            mBt_preview.setText("预览" + size + "/" + 9);
                         }
                     });
 
@@ -184,6 +186,7 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void onItemSelectNum(int size) {
                         mTv_done.setText("完成(" + size + ")");
+                        mBt_preview.setText("预览" + "/" + size);
                     }
                 });
                 mBottom_choose_dir.setText(imgFolderBean.getName());
@@ -335,20 +338,23 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.iv_back:
+            case R.id.iv_back:  //返回按钮
                 finish();
                 break;
-            case R.id.tv_done:
+            case R.id.tv_done: //点击完成
                 Intent intent = new Intent();
                 ArrayList<String> images = (ArrayList<String>) mImageAdapter.getImages();
                 intent.putStringArrayListExtra("mImgs", images);
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
-            case R.id.btn_preview:
+            case R.id.btn_preview: //预览图片
                 Intent intent2 = new Intent(this, BigImageActivity.class);
-                intent2.putStringArrayListExtra(Const.LIST_FROM_RN, (ArrayList<String>) mImageAdapter.getImages());
-                startActivity(intent2);
+                List<String> previewImgs = mImageAdapter.getImages();
+                if (previewImgs != null && previewImgs.size() > 0) {
+                    intent2.putStringArrayListExtra(Const.LIST_FROM_RN, (ArrayList<String>) mImageAdapter.getImages());
+                    startActivity(intent2);
+                }
                 break;
         }
     }

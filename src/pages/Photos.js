@@ -41,11 +41,10 @@ class Photos extends Component {
 
   renderHeader() {
     return (
-      <TouchableOpacity
-        onPress={this.addPotos}
+      <View
         style={{ backgroundColor: '#55393A3F', padding: 10, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>添加照片</Text>
-      </TouchableOpacity>
+        <Text style={{color:'#fff'}}>点击添加图标添加图片</Text>
+      </View>
     )
   }
 
@@ -72,7 +71,6 @@ class Photos extends Component {
       style={{ marginTop: 5, marginBottom: 5, marginLeft: 3, marginRight: 3, }}
       onPress={() => this.goToBigImage(index)}>
       {index == 0 ? <Image source={require('../res/images/addImage.png')} style={{ width: CommonStyle.screen_width / 3 - 10, height: CommonStyle.screen_width / 3 - 10 }} /> : <Image source={{ uri: 'file:' + item }} style={{ width: CommonStyle.screen_width / 3 - 10, height: CommonStyle.screen_width / 3 - 10 }} />}
-
       {index !== 0 &&
         <TouchableOpacity
           onPress={() => this.deleteImgs(index)}

@@ -23,7 +23,7 @@ public class PhotosQueryHandler extends AsyncQueryHandler {
 
         if (token == 0 && cookie instanceof PhotosAdapter) {
             PhotosAdapter cursorAdapter = (PhotosAdapter) cookie;
-            Log.d("cursor",cursor.);
+//            Log.d("cursor",cursor.);
             cursorAdapter.changeCursor(cursor);
         }
 

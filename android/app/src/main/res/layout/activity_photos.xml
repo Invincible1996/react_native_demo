@@ -84,7 +84,7 @@
                 android:background="@drawable/shape_select"
                 android:text="预览"
                 android:layout_toLeftOf="@+id/id_total_count"
-                android:layout_width="50dp"
+                android:layout_width="60dp"
                 android:layout_height="30dp"/>
 
         <TextView
