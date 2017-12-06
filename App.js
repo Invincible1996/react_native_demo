@@ -36,6 +36,7 @@ import TabLayout                from './src/pages/TabLayoutTest'
 import ModalTest                from './src/pages/ModalTest'
 import GlideTest                from './src/pages/GlideTest'
 import DetailPage               from './src/pages/DetailPage'
+import AndroidBackPress         from './src/pages/AndroidBackPress'
 
 
 const TabConfig = {
@@ -92,6 +93,7 @@ const StackNav = StackNavigator({
   ModalTest: { screen: ModalTest },
   GlideTest: { screen: GlideTest },
   DetailPage: { screen: DetailPage },
+  AndroidBackPress: { screen: AndroidBackPress },
 }, {
     initialRouteName: 'HomeNav',
     navigationOptions: ({ navigation }) => ({

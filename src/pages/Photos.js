@@ -10,7 +10,7 @@ class Photos extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      images: []
+      images: ['22']
     }
     this.navigate = this.props.navigation.navigate;
 
@@ -21,9 +21,10 @@ class Photos extends Component {
   }
 
   getData(res) {
-
+    let data = JSON.parse(res);
+    data.unshift('22')
     this.setState({
-      images: [...JSON.parse(res)]
+      images: [...data]
     }, () => console.log('this.state.images', this.state.images))
   }
 
@@ -49,8 +50,12 @@ class Photos extends Component {
   }
 
   goToBigImage(index) {
-    let json = JSON.stringify(this.state.images)
-    ImagePicker.goToBigImage(json, index)
+    if (index == 0) {
+      this.addPotos()
+    } else {
+      let json = JSON.stringify(this.state.images)
+      ImagePicker.goToBigImage(json, index)
+    }
   }
 
   deleteImgs(index) {
@@ -65,13 +70,15 @@ class Photos extends Component {
     return (<TouchableOpacity
       activeOpacity={1.0}
       style={{ marginTop: 5, marginBottom: 5, marginLeft: 3, marginRight: 3, }}
-      onPress={()=>this.goToBigImage(index)}>
-      <Image source={{ uri: 'file:' + item }} style={{ width: CommonStyle.screen_width / 3 - 10, height: CommonStyle.screen_width / 3 - 10 }} />
-      <TouchableOpacity
-        onPress={() => this.deleteImgs(index)}
-        style={{ position: 'absolute', right: 2, top: 2 }}>
-        <Image source={require('../res/images/deleteImage.png')} style={{ width: 20, height: 20 }} />
-      </TouchableOpacity>
+      onPress={() => this.goToBigImage(index)}>
+      {index == 0 ? <Image source={require('../res/images/addImage.png')} style={{ width: CommonStyle.screen_width / 3 - 10, height: CommonStyle.screen_width / 3 - 10 }} /> : <Image source={{ uri: 'file:' + item }} style={{ width: CommonStyle.screen_width / 3 - 10, height: CommonStyle.screen_width / 3 - 10 }} />}
+
+      {index !== 0 &&
+        <TouchableOpacity
+          onPress={() => this.deleteImgs(index)}
+          style={{ position: 'absolute', right: 2, top: 2 }}>
+          <Image source={require('../res/images/deleteImage.png')} style={{ width: 20, height: 20 }} />
+        </TouchableOpacity>}
     </TouchableOpacity>)
   }
 
@@ -95,7 +102,7 @@ class Photos extends Component {
 
   render() {
     return (
-      <View style={{ padding: 0, flex: 1 }}>
+      <View style={{ padding: 0, flex: 1, backgroundColor: '#0ff' }}>
         <View style={{ padding: 5 }}>
           {this.renderHeader()}
         </View>

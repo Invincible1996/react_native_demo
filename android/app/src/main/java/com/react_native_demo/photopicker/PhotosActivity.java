@@ -226,90 +226,90 @@ public class PhotosActivity extends AppCompatActivity implements View.OnClickLis
             return;
         }
 
-//        mProgressDialog = ProgressDialog.show(this, null, "数据加载中...");
+        mProgressDialog = ProgressDialog.show(this, null, "数据加载中...");
 
-        PhotosQueryHandler mQueryHandler = new PhotosQueryHandler(getContentResolver());
-
-        String[] projection = null;
-        String selection = MediaStore.Images.Media.MIME_TYPE + "= ? or " + MediaStore.Images.Media.MIME_TYPE + "= ?";
-        String[] selectionArgs = new String[]{"image/jpeg", "image/png"};
-        String orderBy = MediaStore.Images.Media.DATE_MODIFIED;
-
-        PhotosAdapter adapter = new PhotosAdapter(this, null);
-
-        mQueryHandler.startQuery(0, adapter,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null,
-                MediaStore.Images.Media.MIME_TYPE + "= ? or " + MediaStore.Images.Media.MIME_TYPE + "= ?",
-                new String[]{"image/jpeg", "image/png"}, MediaStore.Images.Media.DATE_MODIFIED);
+//        PhotosQueryHandler mQueryHandler = new PhotosQueryHandler(getContentResolver());
+//
+//        String[] projection = null;
+//        String selection = MediaStore.Images.Media.MIME_TYPE + "= ? or " + MediaStore.Images.Media.MIME_TYPE + "= ?";
+//        String[] selectionArgs = new String[]{"image/jpeg", "image/png"};
+//        String orderBy = MediaStore.Images.Media.DATE_MODIFIED;
+//
+//        PhotosAdapter adapter = new PhotosAdapter(this, null);
+//
+//        mQueryHandler.startQuery(0, adapter,
+//                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null,
+//                MediaStore.Images.Media.MIME_TYPE + "= ? or " + MediaStore.Images.Media.MIME_TYPE + "= ?",
+//                new String[]{"image/jpeg", "image/png"}, MediaStore.Images.Media.DATE_MODIFIED);
 
 
         //读取SD卡中图片
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                ContentResolver mContentResolver = PhotosActivity.this
-//                        .getContentResolver();
-//
-//                // 只查询jpeg和png的图片
-//                Cursor mCursor = mContentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null,
-//                        MediaStore.Images.Media.MIME_TYPE + "= ? or " + MediaStore.Images.Media.MIME_TYPE + "= ?",
-//                        new String[]{"image/jpeg", "image/png"}, MediaStore.Images.Media.DATE_MODIFIED);
-//
-//                Set<String> mDirPaths = new HashSet<String>();//防止重复扫描
-//
-//                while (mCursor.moveToNext()) {
-//                    String path = mCursor.getString(mCursor.getColumnIndex(MediaStore.Images.Media.DATA));
-//
-//                    File parentFile = new File(path).getParentFile();
-//                    if (parentFile == null) {
-//                        continue;
-//                    }
-//
-//                    String dirPath = parentFile.getAbsolutePath();
-//
-//                    ImgFolderBean imgFolderBean = null;
-//                    if (mDirPaths.contains(dirPath)) {
-//                        continue;
-//                    } else {
-//                        mDirPaths.add(dirPath);
-//                        imgFolderBean = new ImgFolderBean();
-//                        imgFolderBean.setDir(dirPath);
-//                        imgFolderBean.setFistImgPath(path);
-//                    }
-//
-//                    if (parentFile.list() == null) {
-//                        continue;
-//                    }
-//
-//                    int picSize = parentFile.list(new FilenameFilter() {
-//                        @Override
-//                        public boolean accept(File file, String fileName) {
-//                            if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png")) {
-//
-//                                return true;
-//                            }
-//                            return false;
-//                        }
-//
-//                    }).length;
-//
-//                    totalCount += picSize;
-//
-//                    imgFolderBean.setCount(picSize);
-//                    mFolderBeen.add(imgFolderBean);
-//
-//                    if (picSize > mMaxCount) {
-//                        mMaxCount = picSize;
-//                        mCurrentDir = parentFile;
-//                    }
-//                }
-//
-//
-//                mHandler.sendEmptyMessage(0x110);
-//                mCursor.close();
-//
-//            }
-//        }).start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ContentResolver mContentResolver = PhotosActivity.this
+                        .getContentResolver();
+
+                // 只查询jpeg和png的图片
+                Cursor mCursor = mContentResolver.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null,
+                        MediaStore.Images.Media.MIME_TYPE + "= ? or " + MediaStore.Images.Media.MIME_TYPE + "= ?",
+                        new String[]{"image/jpeg", "image/png"}, MediaStore.Images.Media.DATE_MODIFIED);
+
+                Set<String> mDirPaths = new HashSet<String>();//防止重复扫描
+
+                while (mCursor.moveToNext()) {
+                    String path = mCursor.getString(mCursor.getColumnIndex(MediaStore.Images.Media.DATA));
+
+                    File parentFile = new File(path).getParentFile();
+                    if (parentFile == null) {
+                        continue;
+                    }
+
+                    String dirPath = parentFile.getAbsolutePath();
+
+                    ImgFolderBean imgFolderBean = null;
+                    if (mDirPaths.contains(dirPath)) {
+                        continue;
+                    } else {
+                        mDirPaths.add(dirPath);
+                        imgFolderBean = new ImgFolderBean();
+                        imgFolderBean.setDir(dirPath);
+                        imgFolderBean.setFistImgPath(path);
+                    }
+
+                    if (parentFile.list() == null) {
+                        continue;
+                    }
+
+                    int picSize = parentFile.list(new FilenameFilter() {
+                        @Override
+                        public boolean accept(File file, String fileName) {
+                            if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png")) {
+
+                                return true;
+                            }
+                            return false;
+                        }
+
+                    }).length;
+
+                    totalCount += picSize;
+
+                    imgFolderBean.setCount(picSize);
+                    mFolderBeen.add(imgFolderBean);
+
+                    if (picSize > mMaxCount) {
+                        mMaxCount = picSize;
+                        mCurrentDir = parentFile;
+                    }
+                }
+
+
+                mHandler.sendEmptyMessage(0x110);
+                mCursor.close();
+
+            }
+        }).start();
 
 
     }

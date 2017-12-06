@@ -109,12 +109,13 @@ public class PickerModule extends ReactContextBaseJavaModule {
                 mList.add(array.get(i).toString());
             }
 
-            Log.d("mList", mList.size() + "");
 
         } catch (Exception e) {
 
         }
 
+        mList.remove(0);
+        Log.d("mList", mList.size() + "");
 
         Intent intent = new Intent(mActivity, PhotosActivity.class);
         intent.putStringArrayListExtra(Const.LIST_FROM_RN, (ArrayList<String>) mList);
@@ -132,14 +133,17 @@ public class PickerModule extends ReactContextBaseJavaModule {
                 mList.add(array.get(i).toString());
             }
 
-            Log.d("mList", mList.size() + "");
 
         } catch (Exception e) {
 
         }
+
+        mList.remove(0);
+            Log.d("mList--", mList.toString());
+
         Intent intent = new Intent(mActivity, BigImageActivity.class);
         intent.putStringArrayListExtra(Const.LIST_FROM_RN, (ArrayList<String>) mList);
-        intent.putExtra(Const.FIRSTR_INDEX, index);
+        intent.putExtra(Const.FIRSTR_INDEX, index-1);
         mActivity.startActivity(intent);
     }
 

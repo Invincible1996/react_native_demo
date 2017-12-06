@@ -1,5 +1,5 @@
 import React, { Component, } from 'react'
-import { View, StyleSheet, TouchableOpacity, Text, ScrollView } from 'react-native'
+import { View, StyleSheet, TouchableOpacity, Text, ScrollView, Platform, BackHandler,ToastAndroid } from 'react-native'
 import CommonStyle from '../component/CommonStyle'
 import Icon from 'react-native-vector-icons/Ionicons'
 class Person extends Component {
@@ -32,6 +32,28 @@ class Person extends Component {
     this.goToTestPage = this.goToTestPage.bind(this)
   }
 
+  onBackAndroid = () => {
+    if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
+      //最近2秒内按过back键，可以退出应用。
+      return false;
+    }
+    this.lastBackPressed = Date.now();
+    ToastAndroid.show('再按一次退出应用', ToastAndroid.SHORT);
+    return true;
+  };
+
+  componentWillMount() {
+    if (Platform.OS === 'android') {
+      BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
+    }
+  }
+
+  componentWillUnmount() {
+    if (Platform.OS === 'android') {
+      BackHandler.removeEventListener('hardwareBackPress', this.onBackAndroid);
+    }
+  }
+
   goToTestPage(routers) {
     this.navigate(routers)
   }
@@ -61,6 +83,7 @@ class Person extends Component {
           {this.renderItems('ModalTest', 'ModalTest')}
           {this.renderItems('TextViewTest', 'TextViewTest')}
           {this.renderItems('GlideTest', 'GlideTest')}
+          {this.renderItems('AndroidBackPress', 'AndroidBackPress')}
         </ScrollView>
       </View>
     )
