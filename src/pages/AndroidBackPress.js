@@ -1,8 +1,8 @@
 import React, { Component, } from 'react'
-import { View, Text, Platform, BackHandler, Alert } from 'react-native'
+import { View, Text, Platform, BackHandler, Alert, StyleSheet } from 'react-native'
 import BaseContainer from '../component/BaseContainer'
 import { NavigationActions } from 'react-navigation'
-@BaseContainer("安卓物理返回键")
+@BaseContainer("IphoneX来啦")
 class AndroidBackPress extends Component {
 
   static propTypes = {}
@@ -49,11 +49,23 @@ class AndroidBackPress extends Component {
 
   render() {
     return (
-      <View style={{}}>
-
+      <View style={{ flex: 1, backgroundColor: '#0ff', justifyContent: 'center', alignItems: 'center' }}>
+        <Text style={{ fontSize: 25, color: '#00f' }}>宝贝儿，哥哥送你个iPhone X</Text>
+        <Text style={{ fontSize: 25, color: '#00f' }}>😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘</Text>
+        <Text style={{ fontSize: 25, color: '#00f' }}>愿你开开心心！！！！！</Text>
+        <Text style={{ fontSize: 25, color: '#00f' }}>😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘</Text>
+        <Text style={styles.text}>愿你快快乐乐！！！！！</Text>
+        <Text style={{ fontSize: 25, color: '#00f' }}>😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘</Text>
+        <Text style={styles.text}>愿你永远漂亮！！！！！</Text>
+        <Text style={{ fontSize: 25, color: '#00f' }}>😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘</Text>
+        <Text style={styles.text}>愿你永远十八岁！！！！</Text>
       </View>
     )
   }
 }
-
+const styles = StyleSheet.create({
+  text: {
+    fontSize: 25, color: 'blue'
+  }
+})
 export default AndroidBackPress
