@@ -11,4 +11,9 @@
         <item name="android:windowExitAnimation">@anim/slide_down</item>
     </style>
 
+    <style name="full_activity" parent="AppTheme">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
 </resources>

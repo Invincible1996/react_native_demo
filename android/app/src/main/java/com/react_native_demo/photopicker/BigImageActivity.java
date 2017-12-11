@@ -45,6 +45,7 @@ public class BigImageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_big_image);
 
+
         initView();
         initData();
 
