@@ -26,12 +26,7 @@ class Message extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      data: [
-        { url: 'https://imgcache.cjmx.com/star/201605/20160531151803699.jpg' },
-        { url: 'https://imgcache.cjmx.com/star/201605/20160531151803428.jpg' },
-        { url: 'https://imgcache.cjmx.com/star/201605/20160531151803644.jpg' },
-        { url: 'https://imgcache.cjmx.com/star/201605/20160531151803683.jpg' },
-      ],
+      data: [],
       listData: []
     }
     this.renderBaner = this.renderBaner.bind(this)
@@ -43,12 +38,15 @@ class Message extends Component {
   async getData() {
     try {
       // 注意这里的await语句，其所在的函数必须有async关键字声明
-        console.log('Config:',Config)
-        console.log('api:',Config.applicationId +'--'+Config.API)
+      console.log('Config:', Config)
+      console.log('api:', Config.applicationId + '--' + Config.API)
       let response = await fetch(Config.API);
       // let response = await fetch('https://japi.juhe.cn/joke/img/text.from?key=8aad35fd1e3384b259293e9f491cab5e&page=5&pagesize=20');
       let responseJson = await response.json();
-      console.log('responseJson', responseJson)
+      console.log('responseJson', responseJson.result)
+      this.setState({
+        data: responseJson.result.data
+      })
     } catch (error) {
       console.error(error);
     }

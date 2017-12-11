@@ -4,7 +4,8 @@ import com.android.build.OutputFile
 
 project.ext.envConfigFiles = [
             debug                  : ".env",
-            release: ".env",
+            uat                    : ".env.uat",
+            production             : ".env.prod",
             anycustombuildlowercase: ".env",
 ]
 
@@ -26,7 +27,7 @@ android {
 
     defaultConfig {
 //        applicationId "com.react_native_demo"
-        System.out.println("env:"+project.env.get("applicationId"))
+        System.out.println("----env:"+project.env.get("applicationId"))
         resValue "string", "build_config_package", "com.react_native_demo"
         applicationId project.env.get("applicationId")
         minSdkVersion 16
