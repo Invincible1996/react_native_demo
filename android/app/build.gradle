@@ -3,10 +3,10 @@ apply plugin: "com.android.application"
 import com.android.build.OutputFile
 
 project.ext.envConfigFiles = [
-            debug                  : ".env",
-            uat                    : ".env.uat",
-            production             : ".env.prod",
-            anycustombuildlowercase: ".env",
+        debug                  : ".env",
+        uat                    : ".env.uat",
+        production             : ".env.prod",
+        anycustombuildlowercase: ".env",
 ]
 
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
@@ -27,7 +27,7 @@ android {
 
     defaultConfig {
 //        applicationId "com.react_native_demo"
-        System.out.println("----env:"+project.env.get("applicationId"))
+        System.out.println("----env:" + project.env.get("applicationId"))
         resValue "string", "build_config_package", "com.react_native_demo"
         applicationId project.env.get("applicationId")
         minSdkVersion 16
@@ -80,6 +80,7 @@ dependencies {
     compile 'com.github.chrisbanes:PhotoView:1.2.6'
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.alibaba:fastjson:1.1.67.android'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
 
 // Run this once to be able to run the application with BUCK
