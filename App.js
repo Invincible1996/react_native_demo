@@ -37,6 +37,7 @@ import ModalTest                from './src/pages/ModalTest'
 import GlideTest                from './src/pages/GlideTest'
 import DetailPage               from './src/pages/DetailPage'
 import AndroidBackPress         from './src/pages/AndroidBackPress'
+import Splash                   from './src/pages/Splash'
 
 
 const TabConfig = {
@@ -78,24 +79,25 @@ const HomeNav = TabNavigator({
 // })
 
 const StackNav = StackNavigator({
-  // DrawerNav: { screen: DrawerNav },
-  HomeNav: { screen: HomeNav },
-  BaiduMap: { screen: BaiduMap },
-  Photos: { screen: Photos },
-  Search: { screen: Search },
-  WebPage: { screen: WebPage },
-  TextInputTest: { screen: TextInputTest },
-  PhotosSelect: { screen: PhotosSelect },
-  ReceiveData: { screen: ReceiveData },
-  VideoPlayer: { screen: VideoPlayer },
-  MusicPlayer: { screen: MusicPlayer },
-  TabLayout: { screen: TabLayout },
-  ModalTest: { screen: ModalTest },
-  GlideTest: { screen: GlideTest },
-  DetailPage: { screen: DetailPage },
-  AndroidBackPress: { screen: AndroidBackPress },
+  // DrawerNav:       { screen: DrawerNav },
+  HomeNav:            { screen: HomeNav },
+  BaiduMap:           { screen: BaiduMap },
+  Photos:             { screen: Photos },
+  Search:             { screen: Search },
+  WebPage:            { screen: WebPage },
+  TextInputTest:      { screen: TextInputTest },
+  PhotosSelect:       { screen: PhotosSelect },
+  ReceiveData:        { screen: ReceiveData },
+  VideoPlayer:        { screen: VideoPlayer },
+  MusicPlayer:        { screen: MusicPlayer },
+  TabLayout:          { screen: TabLayout },
+  ModalTest:          { screen: ModalTest },
+  GlideTest:          { screen: GlideTest },
+  DetailPage:         { screen: DetailPage },
+  AndroidBackPress:   { screen: AndroidBackPress },
+  Splash:             { screen: Splash },
 }, {
-    initialRouteName: 'HomeNav',
+    initialRouteName: 'Splash',
     navigationOptions: ({ navigation }) => ({
       headerBackTitle: null,
       headerStyle: {
