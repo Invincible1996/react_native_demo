@@ -38,6 +38,7 @@ import GlideTest                from './src/pages/GlideTest'
 import DetailPage               from './src/pages/DetailPage'
 import AndroidBackPress         from './src/pages/AndroidBackPress'
 import Splash                   from './src/pages/Splash'
+import AlertExample             from './src/pages/AlertExample'
 
 
 const TabConfig = {
@@ -70,7 +71,7 @@ const HomeNav = TabNavigator({
   Message: { screen: Message },
   Person: { screen: Person },
 }, Object.assign({}, TabConfig, {
-  initialRouteName: 'Message',
+  initialRouteName: 'Person',
 }))
 
 // const DrawerNav = DrawerNavigator({
@@ -96,8 +97,9 @@ const StackNav = StackNavigator({
   DetailPage:         { screen: DetailPage },
   AndroidBackPress:   { screen: AndroidBackPress },
   Splash:             { screen: Splash },
+  AlertExample:       { screen: AlertExample },
 }, {
-    initialRouteName: 'Splash',
+    initialRouteName: 'HomeNav',
     navigationOptions: ({ navigation }) => ({
       headerBackTitle: null,
       headerStyle: {

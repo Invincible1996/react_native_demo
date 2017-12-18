@@ -82,7 +82,8 @@ class Person extends Component {
           {this.renderItems('TabLayout', 'TabLayout')}
           {this.renderItems('ModalTest', 'ModalTest')}
           {this.renderItems('GlideTest', 'GlideTest')}
-          {/*this.renderItems('AndroidBackPress', 'AndroidBackPress')*/}
+          {this.renderItems('AndroidBackPress', 'AndroidBackPress')}
+          {this.renderItems('AlertExample', 'AlertExample')}
         </ScrollView>
       </View>
     )

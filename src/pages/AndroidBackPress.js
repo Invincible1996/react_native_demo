@@ -2,12 +2,8 @@ import React, { Component, } from 'react'
 import { View, Text, Platform, BackHandler, Alert, StyleSheet } from 'react-native'
 import BaseContainer from '../component/BaseContainer'
 import { NavigationActions } from 'react-navigation'
-@BaseContainer("IphoneX来啦")
+@BaseContainer("IphoneX来啦", '', "https://japi.juhe.cn/joke/img/text.from?key=8aad35fd1e3384b259293e9f491cab5e&page=5&pagesize=10")
 class AndroidBackPress extends Component {
-
-  static propTypes = {}
-
-  static defaultProps = {}
 
   constructor(props) {
     super(props)
@@ -22,7 +18,15 @@ class AndroidBackPress extends Component {
     if (Platform.OS === 'android') {
       BackHandler.addEventListener('hardwareBackPress', this.onBackAndroid);
     }
+
+
   }
+
+  componentDidMount() {
+    this.props.query()
+    console.log('this.props.data', this.props.data.length)
+  }
+
 
   componentWillUnmount() {
     if (Platform.OS === 'android') {
@@ -50,15 +54,6 @@ class AndroidBackPress extends Component {
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: '#0ff', justifyContent: 'center', alignItems: 'center' }}>
-        <Text style={{ fontSize: 25, color: '#00f' }}>宝贝儿，哥哥送你个iPhone X</Text>
-        <Text style={{ fontSize: 25, color: '#00f' }}>😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘</Text>
-        <Text style={{ fontSize: 25, color: '#00f' }}>愿你开开心心！！！！！</Text>
-        <Text style={{ fontSize: 25, color: '#00f' }}>😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘</Text>
-        <Text style={styles.text}>愿你快快乐乐！！！！！</Text>
-        <Text style={{ fontSize: 25, color: '#00f' }}>😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘</Text>
-        <Text style={styles.text}>愿你永远漂亮！！！！！</Text>
-        <Text style={{ fontSize: 25, color: '#00f' }}>😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘😘</Text>
-        <Text style={styles.text}>愿你永远十八岁！！！！</Text>
       </View>
     )
   }
