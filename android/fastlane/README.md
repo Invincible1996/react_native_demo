@@ -32,7 +32,17 @@ Submit a new Beta Build to Crashlytics Beta
 ```
 fastlane android dev
 ```
-Deploy a new version to the Google Play
+Develop
+### android uat
+```
+fastlane android uat
+```
+UAT env
+### android prod
+```
+fastlane android prod
+```
+prod env
 
 ----
 
