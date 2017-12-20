@@ -38,7 +38,7 @@ platform :android do
   lane :dev do
     gradle(task: "assemble",build_type:"Release",project_dir:"./")
     print lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]
-    sh "fir p #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]} -T 80de3dbec822d14432eb588c22c23815 -c 'React android DEV' "
+    sh "fir p #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]} -T d2dc1f91c0ed7c693853584610f015ce -c 'React android DEV' "
   end
   desc "UAT env"
   lane :uat do
