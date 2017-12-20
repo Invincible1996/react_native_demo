@@ -34,11 +34,24 @@ platform :android do
     # You can also use other beta testing services here
   end
 
-  desc "Deploy a new version to the Google Play"
+  desc "Develop"
   lane :dev do
-    gradle(task: "assembleRelease")
-    upload_to_play_store
+    gradle(task: "assemble",build_type:"Release",project_dir:"./")
+    print lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]
+    sh "fir p #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]} -T 80de3dbec822d14432eb588c22c23815 -c 'React android DEV' "
   end
+  desc "UAT env"
+  lane :uat do
+    ENV["ENVFILE"] = ".env.uat"
+    gradle(task: "assembleRelease")
+    sh "fir p #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]} -T 9512517600b7bd5f6b19d5abd2a27216 -c 'React android UAT' "
+  end
+  desc "prod env"
+  lane :prod do
+    ENV["ENVFILE"] = ".env.prod"
+    gradle(task: "assembleRelease")
+    sh "fir p #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]} -T 9512517600b7bd5f6b19d5abd2a27216 -c 'React android prod' "
+    end
 
   # You can define as many lanes as you want
 
