@@ -38,19 +38,17 @@ platform :android do
   lane :dev do
     gradle(task: "assemble",build_type:"Release",project_dir:"./")
     print lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]
-    sh "fir p #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]} -T d2dc1f91c0ed7c693853584610f015ce -c 'React android DEV' "
   end
   desc "UAT env"
   lane :uat do
     ENV["ENVFILE"] = ".env.uat"
     gradle(task: "assembleRelease")
-    sh "fir p #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]} -T 9512517600b7bd5f6b19d5abd2a27216 -c 'React android UAT' "
+
   end
   desc "prod env"
   lane :prod do
     ENV["ENVFILE"] = ".env.prod"
     gradle(task: "assembleRelease")
-    sh "fir p #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]} -T 9512517600b7bd5f6b19d5abd2a27216 -c 'React android prod' "
     end
 
   # You can define as many lanes as you want
