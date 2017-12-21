@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/Entypo'
 import CommonStyle from '../component/CommonStyle'
 import Swiper from 'react-native-swiper'
 import Config from 'react-native-config'
+import LoadingPage from '../component/LoadingPage'
 class Message extends Component {
 
   static navigationOptions = ({ navigation }) => {
@@ -27,7 +28,16 @@ class Message extends Component {
     super(props)
     this.state = {
       data: [],
-      listData: []
+      listData: [],
+      imgs: [
+        { url: 'https://i1.letvimg.com/lc03_crawler/201712/19/20/13/151368560425828-0.jpg' },
+        { url: 'https://i1.letvimg.com/lc03_crawler/201712/19/20/13/151368560425828-1.jpg' },
+        { url: 'https://i0.letvimg.com/lc03_crawler/201712/19/20/13/151368560425828-2.jpg' },
+        { url: 'https://i1.letvimg.com/lc03_crawler/201712/19/20/13/151368560425828-3.jpg' },
+        { url: 'https://i0.letvimg.com/lc03_crawler/201712/19/20/13/151368560425828-4.jpg' },
+        { url: 'https://i2.letvimg.com/lc07_qmt/201712/21/11/12/86d6fb86-e8ab-46a1-b6ac-967f5c1d43a4.jpg' },
+      ],
+      isLoading: true,
     }
     this.renderBaner = this.renderBaner.bind(this)
   }
@@ -41,11 +51,12 @@ class Message extends Component {
       console.log('Config:', Config)
       console.log('api:', Config.applicationId + '--' + Config.API)
       // let response = await fetch(Config.API);
-      let response = await fetch('https://japi.juhe.cn/joke/img/text.from?key=8aad35fd1e3384b259293e9f491cab5e&page=5&pagesize=20');
+      let response = await fetch('https://japi.juhe.cn/joke/img/text.from?key=8aad35fd1e3384b259293e9f491cab5e&page=5&pagesize=5');
       let responseJson = await response.json();
       console.log('responseJson', responseJson.result)
       this.setState({
-        data: responseJson.result.data
+        data: responseJson.result.data,
+        isLoading: false
       })
     } catch (error) {
       console.error(error);
@@ -53,7 +64,7 @@ class Message extends Component {
   }
 
   renderBaner() {
-    return (this.state.data.map((item, key) => {
+    return (this.state.imgs.map((item, key) => {
       console.log(item.url)
       return (<Image source={{ uri: item.url }} key={key} style={{ width: CommonStyle.screen_width, height: CommonStyle.screen_height / 2 }} />)
     }))
@@ -79,6 +90,7 @@ class Message extends Component {
             <Text style={{ color: 'blue', marginTop: 5 }}>    依靠窗前凝着雨,等到夜静已经只感到无法再一起世界像似风已静伤心始终究竟想永远在一起 抱紧你这伤悲爱到梦内万千说话我对你不只为在这歌声中感动你因为爱上你心依然当作我生命自醉心灵全是爱这刻醒来倍感伤感慨 别离始终爱像永远逝去一样天涯求遇见但是无情障碍往昔无情的雨夜向星语诉心愿你回来伤心始终究竟想永远在一起 抱紧你这伤悲爱到梦内万千说话我对你不只为在这歌声中感动你因为爱上你心依然当作我生命自醉心灵全是爱这刻醒来倍感伤感慨 别离始终爱像永远逝去一样天涯求遇见但是无情障碍往昔无情的雨夜向星语诉心愿你回来自醉心灵全是爱这刻醒来倍感伤感慨 别离始终爱像永远逝去一样天涯求遇见但是无情障碍往昔无情的雨夜向星语诉心愿你回来。。。</Text>
           </View>
         </ScrollView>
+        {this.state.isLoading && <LoadingPage />}
       </View>
     )
   }
