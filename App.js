@@ -71,7 +71,7 @@ const HomeNav = TabNavigator({
   Message: { screen: Message },
   Person: { screen: Person },
 }, Object.assign({}, TabConfig, {
-  initialRouteName: 'Person',
+  initialRouteName: 'Home',
 }))
 
 // const DrawerNav = DrawerNavigator({

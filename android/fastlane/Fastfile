@@ -38,19 +38,19 @@ platform :android do
   lane :dev do
     ENV["ENVFILE"] = ".env"
     gradle(task: "assembleRelease")
-    sh "fir p #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]} -T d2dc1f91c0ed7c693853584610f015ce -c 'ReactNative android dev' "
+    #sh "fir p #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]} -T d2dc1f91c0ed7c693853584610f015ce -c 'ReactNative android dev' "
   end
   desc "UAT env"
   lane :uat do
     ENV["ENVFILE"] = ".env.uat"
     gradle(task: "assembleRelease")
-    sh "fir p #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]} -T d2dc1f91c0ed7c693853584610f015ce -c 'ReactNative android uat' "
+    #sh "fir p #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]} -T d2dc1f91c0ed7c693853584610f015ce -c 'ReactNative android uat' "
   end
   desc "prod env"
   lane :prod do
     ENV["ENVFILE"] = ".env.prod"
     gradle(task: "assembleRelease")
-    sh "fir p #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]} -T d2dc1f91c0ed7c693853584610f015ce -c 'ReactNative android prod' "
+    #sh "fir p #{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]} -T d2dc1f91c0ed7c693853584610f015ce -c 'ReactNative android prod' "
     end
 
   # You can define as many lanes as you want
