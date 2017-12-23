@@ -39,6 +39,7 @@ import DetailPage               from './src/pages/DetailPage'
 import AndroidBackPress         from './src/pages/AndroidBackPress'
 import Splash                   from './src/pages/Splash'
 import AlertExample             from './src/pages/AlertExample'
+import Login                    from './src/pages/Login'
 
 
 const TabConfig = {
@@ -98,6 +99,7 @@ const StackNav = StackNavigator({
   AndroidBackPress:   { screen: AndroidBackPress },
   Splash:             { screen: Splash },
   AlertExample:       { screen: AlertExample },
+  Login:              { screen: Login },
 }, {
     initialRouteName: 'HomeNav',
     navigationOptions: ({ navigation }) => ({
