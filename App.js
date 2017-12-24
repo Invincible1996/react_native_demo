@@ -40,6 +40,7 @@ import AndroidBackPress         from './src/pages/AndroidBackPress'
 import Splash                   from './src/pages/Splash'
 import AlertExample             from './src/pages/AlertExample'
 import Login                    from './src/pages/Login'
+import Find                    from './src/pages/FindPage'
 
 
 const TabConfig = {
@@ -70,6 +71,7 @@ const TabConfig = {
 const HomeNav = TabNavigator({
   Home: { screen: Home },
   Message: { screen: Message },
+  Find: {screen:Find},
   Person: { screen: Person },
 }, Object.assign({}, TabConfig, {
   initialRouteName: 'Home',
@@ -100,8 +102,9 @@ const StackNav = StackNavigator({
   Splash:             { screen: Splash },
   AlertExample:       { screen: AlertExample },
   Login:              { screen: Login },
+  Find:               { screen: Find },
 }, {
-    initialRouteName: 'HomeNav',
+    initialRouteName: 'Login',
     navigationOptions: ({ navigation }) => ({
       headerBackTitle: null,
       headerStyle: {
