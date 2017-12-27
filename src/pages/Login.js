@@ -1,14 +1,25 @@
 import React, { Component, } from 'react'
-import { View, Text, Platform, Alert, StyleSheet, TouchableOpacity, TextInput, ScrollView, ImageBackground, AsyncStorage } from 'react-native'
+import {
+    View,
+    Text,
+    Platform,
+    Alert,
+    StyleSheet,
+    TouchableOpacity,
+    TextInput,
+    ScrollView,
+    ImageBackground,
+    AsyncStorage
+} from 'react-native'
+
 import { NavigationActions } from 'react-navigation'
 import Toast from 'react-native-root-toast';
-import CommonStyle from '../component/CommonStyle'
-import NetUtils from '../utils/NetUtils'
+import { BubblesLoader } from 'react-native-indicator';
 import DeviceInfo from 'react-native-device-info';
 import Config from 'react-native-config';
 
-// import InitFetch from '../component/initfetchcontainer'
-// @InitFetch()
+import CommonStyle from '../component/CommonStyle'
+
 export default class Login extends Component {
 
     static navigationOptions = ({ navigation }) => {
@@ -87,7 +98,7 @@ export default class Login extends Component {
                 let url = Config.API + makeUrl('/apis/auth/loginByPassword.do', params)
 
                 console.log('-----url', url)
-
+                this.setState({ isLoading: true })
                 fetch(url, {
                     method: 'GET',
                     headers: customHeader,
@@ -97,7 +108,8 @@ export default class Login extends Component {
                         let response = JSON.parse(res._bodyInit);
                         console.log('response', response.response)
                         if (response.response && response.response.code == 0) {
-                            this.toHomePage()
+                            // this.setState({ isLoading: false })
+                            // this.toHomePage()
                         }
                         if (response.response.code == 5) {
                             Toast.show(response.response.message, { position: Toast.positions.CENTER })
@@ -163,17 +175,28 @@ export default class Login extends Component {
                                 underlineColorAndroid='transparent'
                                 placeholder='密码'
                                 ref='password'
+                                secureTextEntry={true}
                                 onChangeText={(text) => { this.setState({ password: text }) }}
                             />
                         </View>
                         <TouchableOpacity
-                            disabled={this.state.phone.length == 0}
+                            disabled={this.state.phone.length == 0 || this.state.isLoading}
                             onPress={() => this.startLogin(this.state.phone, this.state.password, 'code')}
                             style={[styles.loginBtnView, { backgroundColor: this.state.phone.length == 0 || this.state.password.length == 0 ? '#DEDDDE' : '#EAC100', }]}>
-                            <Text style={{ color: this.state.phone.length == 0 || this.state.password.length == 0 ? '#9c9c9c' : 'white', fontSize: 16 }}>登录</Text>
+                            <Text style={{
+                                color: this.state.phone.length == 0 || this.state.password.length == 0 ? '#9c9c9c' : 'white',
+                                fontSize: 16,
+                                alignSelf: 'center'
+                            }}>
+                                登录
+                            </Text>
+                            {this.state.isLoading && <View style={{ marginLeft: 5 }}>
+                                <BubblesLoader size={20} color="#fff" dotRadius={4} />
+                            </View>}
                         </TouchableOpacity>
                     </View>
                     <View style={{ flexDirection: 'row', paddingLeft: 30 }}>
+
                         <Text>登录即是代表同意</Text>
                         <TouchableOpacity>
                             <Text style={{ color: 'blue' }}>服务协议</Text>
@@ -215,7 +238,8 @@ const styles = StyleSheet.create({
         padding: 10,
         marginTop: 20,
         width: CommonStyle.screen_width * 0.7,
-        borderRadius: 5
+        borderRadius: 5,
+        flexDirection: 'row'
     },
 })
 

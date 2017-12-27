@@ -16,7 +16,7 @@
 		"react-native-video": "^2.0.0",
 		"react-navigation": "^1.0.0-beta.15",
 		"react-native-root-toast": "https://github.com/chronixlo/react-native-root-toast",
-		"react-native-device-info": "git+https://github.com/sinceyoyo/react-native-device-info.git"
+		"react-native-device-info": "^0.13.0"
 	},
 	"devDependencies": {
 		"babel-jest": "21.2.0",
