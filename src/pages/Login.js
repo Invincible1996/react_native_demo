@@ -96,6 +96,9 @@ export default class Login extends Component {
                     .then((res) => {
                         let response = JSON.parse(res._bodyInit);
                         console.log('response', response.response)
+                        if (response.response && response.response.code == 0) {
+                            this.toHomePage()
+                        }
                         if (response.response.code == 5) {
                             Toast.show(response.response.message, { position: Toast.positions.CENTER })
                         }

@@ -4,8 +4,6 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 import Commonstye from '../component/CommonStyle'
 import LoadingPage from '../component/LoadingPage'
 
-import InitFetch from '../component/initfetchcontainer'
-@InitFetch({ url: "/project/queryProjects.do", query: { curPage: 1, pageSize: 20 }, key: 'projects' })
 class Home extends Component {
 
   static navigationOptions = ({ navigation }) => {
@@ -73,7 +71,6 @@ class Home extends Component {
   }
 
   render() {
-    console.log('this.props.data', this.props.data.projects)
     return (
       <View style={styles.container}>
 
