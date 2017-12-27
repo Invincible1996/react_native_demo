@@ -14,7 +14,9 @@
 		"react-native-swiper": "^1.5.13",
 		"react-native-vector-icons": "^4.4.2",
 		"react-native-video": "^2.0.0",
-		"react-navigation": "^1.0.0-beta.15"
+		"react-navigation": "^1.0.0-beta.15",
+		"react-native-root-toast": "https://github.com/chronixlo/react-native-root-toast",
+		"react-native-device-info": "^0.10.2"
 	},
 	"devDependencies": {
 		"babel-jest": "21.2.0",

@@ -1,5 +1,6 @@
 import React, { Component, } from 'react'
-import { View, Text ,WebView} from 'react-native'
+import { View, Text, WebView } from 'react-native'
+import PropTypes from 'prop-types'
 export default class BaiduMap extends Component {
 
   static navigationOptions = ({ navigation }) => {
@@ -9,15 +10,24 @@ export default class BaiduMap extends Component {
     }
   };
 
+  static contextTypes = {
+    store: PropTypes.object.isRequired
+  }
+
   constructor(props) {
     super(props)
     this.state = {}
   }
 
+  componentDidMount() {
+    this.context.store.register()
+  }
+
+
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: '#f7f7f7', justifyContent: 'center', alignItems: 'center' }}>
-        <WebView javaScriptEnabled={true} source={{uri:'https://3g.163.com/v/video/VQ3DIKQOE.html'}} />
+        <Text>{this.context.store}</Text>
       </View>
     )
   }

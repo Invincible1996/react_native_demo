@@ -11,7 +11,7 @@
 import React, {Component} from 'react'
 import {Platform, View, StyleSheet, AsyncStorage, Alert} from 'react-native'
 import Toast from 'react-native-root-toast';
-import {JMessage, JPush} from "react-native-jmessage";
+// import {JMessage, JPush} from "react-native-jmessage";
 
 import Config from 'react-native-config';
 import DeviceInfo from 'react-native-device-info';
@@ -71,8 +71,8 @@ export default ({url = "", query = {}, method = "GET", key} = {}) => (Componend)
             })
         }
 
-        // global.store.unReadNum = unReadNum
-        // global.store.chatUnReadCount = chatUnReadCount
+        global.store.unReadNum = unReadNum
+        global.store.chatUnReadCount = chatUnReadCount
 
         if (preStore === storeState) {
             console.log('pre store === cur store')
@@ -155,9 +155,7 @@ export default ({url = "", query = {}, method = "GET", key} = {}) => (Componend)
 
                     this.context.store.dispatch({key: initConfig.key, value: data}, this);
                     onSuccess && onSuccess(data, page)
-
                 }
-
             },
             onError
         )
@@ -176,7 +174,7 @@ export default ({url = "", query = {}, method = "GET", key} = {}) => (Componend)
     }
 
     async makeFetch(url, params, method, onSuccess, onError) {
-        let user = await AsyncStorage.getItem("AuthData")
+        let user = await AsyncStorage.getItem("UserInfo")
         if (user) {
             let userObj = JSON.parse(user)
             if (userObj && userObj.token) {
@@ -269,7 +267,7 @@ export default ({url = "", query = {}, method = "GET", key} = {}) => (Componend)
 
     componentDidMount() {
         if (this.props.navigation) {
-            global.store.navigation = this.props.navigation
+            // global.store.navigation = this.props.navigation
         }
         this.storeListener = this.context.store ? this.context.store.register(this.handleChange) : null//注册store变化并setState
         if (Componend.backHander && typeof Componend.backHander === 'function' && !this.removeListener) {
@@ -323,7 +321,7 @@ function makeFetch(url, query, method, user) {
         customHeader['Cookie'] = `TOKEN=${user.token}`;
         customHeader['token'] = user.token;
     }
-    console.log(customHeader)
+    console.log('customHeader',customHeader)
     return fetch(requestUrl, {
         method: method.toUpperCase(),
         headers: customHeader,
@@ -339,7 +337,8 @@ function makeUrl(queryUrl, param) {
         arr.push(key + '=' + param[key])
     }
     const url = queryUrl + (queryUrl.endsWith('?') ? '&' : '?') + arr.join('&')
-    log.i('requestUrl: ' + url)
+    // log.i('requestUrl: ' + url)
+    console.log('requestUrl: ' + url)
     return url
 }
 

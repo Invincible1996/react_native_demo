@@ -78,10 +78,9 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-device-info')
     compile project(':react-native-config')
-    compile project(':react-native-video')
     compile project(':react-native-vector-icons')
-    compile project(':react-native-video')
     compile fileTree(dir: "libs", include: ["*.jar"])
     // From node_modules
     compile 'com.android.support:appcompat-v7:23.4.0'

@@ -3,6 +3,9 @@ import { View, StyleSheet, Text, Image, FlatList } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Commonstye from '../component/CommonStyle'
 import LoadingPage from '../component/LoadingPage'
+
+import InitFetch from '../component/initfetchcontainer'
+@InitFetch({ url: "/project/queryProjects.do", query: { curPage: 1, pageSize: 20 }, key: 'projects' })
 class Home extends Component {
 
   static navigationOptions = ({ navigation }) => {
@@ -29,40 +32,15 @@ class Home extends Component {
       isLoading: true,
       refreshing: false
     }
-    this.rand = this.rand.bind(this)
+  
     this.renderItem = this.renderItem.bind(this)
     this.ListFooterComponent = this.ListFooterComponent.bind(this)
     this.onRefresh = this.onRefresh.bind(this)
-    this.getMoviesFromApi = this.getMoviesFromApi.bind(this)
     this.keyExtractor = this.keyExtractor.bind(this)
   }
 
   componentDidMount() {
-    this.getMoviesFromApi()
-    console.log('===========', this.rand(1, 5))
-    // this.getNetData()
-  }
-  rand(min, max) {
-    return Math.round(Math.random() * (max - min))
-  }
 
-  async getMoviesFromApi() {
-
-    try {
-      // 注意这里的await语句，其所在的函数必须有async关键字声明
-      let page = this.rand(1, 10)
-      console.log('this.ramdom', page)
-      let response = await fetch('https://japi.juhe.cn/joke/img/text.from?key=8aad35fd1e3384b259293e9f491cab5e&page=' + page + '&pagesize=20');
-      let responseJson = await response.json();
-      // console.log('responseJson', responseJson.result.data)
-      this.setState({
-        data: responseJson.result.data,
-        isLoading: false,
-      }, () => console.log('this,state,data', this.state.data))
-      // return responseJson.movies;
-    } catch (error) {
-      console.error(error);
-    }
   }
 
   renderItem({ item }) {
@@ -91,27 +69,11 @@ class Home extends Component {
   }
 
   async onRefresh() {
-    this.setState({ refreshing: true })
-    try {
-      // 注意这里的await语句，其所在的函数必须有async关键字声明
-      let page = this.rand(1, 5)
-      console.log('this.ramdom', page)
-      let response = await fetch('https://japi.juhe.cn/joke/img/text.from?key=8aad35fd1e3384b259293e9f491cab5e&page=' + page + '&pagesize=20');
-      let responseJson = await response.json();
-      // console.log('responseJson', responseJson.result.data)
-      this.setState({
-        data: responseJson.result.data,
-        isLoading: false,
-        refreshing: false
-      }, () => console.log('this,state,data', this.state.data))
-      // return responseJson.movies;
-    } catch (error) {
-      console.error(error);
-    }
-
+    // this.setState({ refreshing: true })
   }
 
   render() {
+    console.log('this.props.data', this.props.data.projects)
     return (
       <View style={styles.container}>
 
@@ -123,7 +85,6 @@ class Home extends Component {
           keyExtractor={this.keyExtractor}
           ListFooterComponent={this.ListFooterComponent}
         />
-        {this.state.isLoading && <LoadingPage />}
       </View>
     )
   }

@@ -30,7 +30,6 @@ import WebPage                  from './src/pages/WebPage'
 import TextInputTest            from './src/pages/TextInputTest'
 import PhotosSelect             from './src/pages/PhotosSelect'
 import ReceiveData              from './src/pages/ReceiveData'
-import VideoPlayer              from './src/pages/VideoPlayer'
 import MusicPlayer              from './src/pages/MusicPlayer'
 import TabLayout                from './src/pages/TabLayoutTest'
 import ModalTest                from './src/pages/ModalTest'
@@ -92,7 +91,6 @@ const StackNav = StackNavigator({
   TextInputTest:      { screen: TextInputTest },
   PhotosSelect:       { screen: PhotosSelect },
   ReceiveData:        { screen: ReceiveData },
-  VideoPlayer:        { screen: VideoPlayer },
   MusicPlayer:        { screen: MusicPlayer },
   TabLayout:          { screen: TabLayout },
   ModalTest:          { screen: ModalTest },
